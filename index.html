@@ -134,118 +134,138 @@
       </div>
     </div>
     
-    <!-- Login Popup -->
-    <div class="popup popup-login">
-    <div class="content-block-login">
-      <h4>LOGIN</h4>
-            <div class="loginform">
-                <form id="LoginForm" method="post">
-                <div class="form_row">
-                <div class="form_row_icon"><img src="images/icons/yellow/user.png" alt="" title="" /></div>
-                <input type="text" name="Username" value="" class="form_input required" placeholder="username" />
-                </div>
-                <div class="form_row">
-                <div class="form_row_icon"><img src="images/icons/yellow/lock.png" alt="" title="" /></div>
-                <input type="password" name="Password" value="" class="form_input required" placeholder="password" />
-                </div>
-                <div class="forgot_pass"><a href="#" data-popup=".popup-forgot" class="open-popup">Forgot Password?</a></div>
-                <input type="submit" name="submit" class="form_submit" id="submit" value="SIGN IN" />
-                </form>
-                <div class="signup_social">
-                <a href="http://www.facebook.com/" class="signup_facebook external">FACEBOOK</a>
-                <a href="http://www.twitter.com/" class="signup_twitter external">TWITTER</a>                </div>
-                <div class="signup_bottom">
-                <p>Don't have an account?</p>
-                <a href="#" data-popup=".popup-signup" class="open-popup">SIGN UP</a>                </div>
-            </div>
-      <div class="close_loginpopup_button"><a href="#" class="close-popup"><img src="images/icons/white/menu_close.png" alt="" title="" /></a></div>
-    </div>
-    </div>
+	<!-- Login Popup -->
+		<div class="popup popup-login">
+			<div class="content-block-login">
+			<h4>Inicia sesi&oacute;n</h4>
+				<div class="loginform">
+					<form id="LoginForm" method="post">
+						<div class="form_row">
+							<div class="form_row_icon"><img src="images/icons/yellow/user.png" alt="" title="" /></div>
+							<input type="text" name="nickname" value="" class="form_input required js-usuario" placeholder="nickname" />
+						</div>
+						<div class="form_row">
+							<div class="form_row_icon"><img src="images/icons/yellow/lock.png" alt="" title="" /></div>
+							<input type="password" name="clave" value="" class="form_input required js-clave" placeholder="password" />
+						</div>
+						<div class="forgot_pass"><a href="#" data-popup=".popup-forgot" class="open-popup">Olvid&oacute; su clave?</a></div>
+						<input type="submit" name="submit" class="form_submit" id="submit" value="Entrar" />
+					</form>
+					<div class="signup_bottom">
+						<p>No tienes una cuenta?</p>
+						<a href="#" data-popup=".popup-signup" class="open-popup">Reg&iacute;strate ac&aacute;!</a>
+						<p>&nbsp;</p>
+						<p>Quieres ser un asesor? <a href="#" data-popup=".popup-signup2" class="open-popup">Reg&iacute;strate ac&aacute;!</a></p>
+					</div>
+				</div>
+				<div id="closelogin" class="close_loginpopup_button"><a href="#" class="close-popup"><img src="images/icons/yellow/menu_close.png" alt="" title="" /></a></div>
+			</div>
+		</div>
     
-    <!-- Register Popup -->
-    <div class="popup popup-signup">
-    <div class="content-block-login">
-      <h4>REGISTER</h4>
-            <div class="loginform">
-            <form id="RegisterForm" method="post">
-            <div class="form_row">
-            <div class="form_row_icon"><img src="images/icons/yellow/user.png" alt="" title="" /></div>
-            <input type="text" name="Username" value="" class="form_input required" placeholder="username" />
-            </div>
-            <div class="form_row">
-            <div class="form_row_icon"><img src="images/icons/yellow/contact.png" alt="" title="" /></div>
-            <input type="text" name="Email" value="" class="form_input required" placeholder="email" />
-            </div>
-            <div class="form_row">
-            <div class="form_row_icon"><img src="images/icons/yellow/lock.png" alt="" title="" /></div>
-            <input type="password" name="Password" value="" class="form_input required" placeholder="password" />
-            </div>
-            <input type="submit" name="submit" class="form_submit" id="submit" value="SIGN UP" />
-            </form>
-            <div class="signup_social">
-            <a href="http://www.facebook.com/" class="signup_facebook external">FACEBOOK</a>
-            <a href="http://www.twitter.com/" class="signup_twitter external">TWITTER</a>            </div>
-            </div>
-      <div class="close_loginpopup_button"><a href="#" class="close-popup"><img src="images/icons/white/menu_close.png" alt="" title="" /></a></div>
-    </div>
-    </div>
+    ----
+				<div id="fregistro" class="content-block-login">
+				<h4>Reg&iacute;strate</h4>
+				<div class="loginform">
+					<form id="RegisterForm" method="post">
+						<div class="form_row">
+							<div class="form_row_icon"><img src="images/icons/yellow/user.png" alt="" title="" /></div>
+							<input type="text" name="nombre" value="" class="form_input required" placeholder="nombre y apellido" />
+						</div>
+						<div class="form_row">
+							<div class="form_row_icon"><img src="images/icons/yellow/user.png" alt="" title="" /></div>
+							<input type="text" name="nickname" value="" class="form_input required js-user-reg" placeholder="nickname" />
+						</div>
+						<div class="form_row">
+							<div class="form_row_icon"><img src="images/icons/yellow/lock.png" alt="" title="" /></div>
+							<input type="password" name="clave" value="" class="form_input required" placeholder="password" />
+						</div>
+						<div class="form_row">
+							<div class="form_row_icon"><img src="images/icons/yellow/contact.png" alt="" title="" /></div>
+							<input type="text" name="email" value="" class="form_input required" placeholder="email" />
+						</div>
+						<input type="submit" name="submit" class="form_submit" id="submit" value="Registrarse" />
+					</form>
+					<p>
+						Al registrarte est&aacute;s de acuerdo con los <a href="data/terminos.html" onclick="closeModals();">T&eacute;rminos y condiciones</a>
+						y la <a href="data/privacidad.html" onclick="closeModals();">Pol&iacute;tica de privacidad</a>
+					</p>
+				</div>
+				<div class="close_loginpopup_button"><a href="#" class="close-popup"><img src="images/icons/blue/menu_close.png" alt="" title="" /></a></div>
+			</div>
+		</div>
+		<!-- Register assistant Popup -->
+		<div class="popup popup-signup2">
+			<div class="content-block-login">
+				<h4>Reg&iacute;strate</h4>
+				<div class="loginform contactform">
+					<form id="RegisterForm2" method="post">
+						<div class="form_row">
+							<div class="form_row_icon"><img src="images/icons/yellow/user.png" alt="" title="" /></div>
+							<input type="text" name="nickname" value="" class="form_input required js-assistant-reg" placeholder="nickname" />
+						</div>
+						<div class="form_row">
+							<div class="form_row_icon"><img src="images/icons/yellow/contact.png" alt="" title="" /></div>
+							<input type="text" name="email" value="" class="form_input required" placeholder="email" />
+						</div>
+						<div class="form_row">
+							<div class="form_row_icon"><img src="images/icons/yellow/lock.png" alt="" title="" /></div>
+							<input type="password" name="clave" value="" class="form_input required" placeholder="password" />
+						</div>
     
-    <!-- Login Popup -->
-    <div class="popup popup-forgot">
-    <div class="content-block-login">
-      <h4>FORGOT PASSWORD</h4>
-            <div class="loginform">
-            <form id="ForgotForm" method="post">
-            <div class="form_row">
-            <div class="form_row_icon"><img src="images/icons/yellow/contact.png" alt="" title="" /></div>
-            <input type="text" name="Email" value="" class="form_input required" placeholder="email" />
-            </div>
-            <input type="submit" name="submit" class="form_submit" id="submit" value="RESEND PASSWORD" />
-            </form>
-            <div class="signup_bottom">
-            <p>Check your email and follow the instructions to reset your password.</p>
-            </div>
-            </div>
-      <div class="close_loginpopup_button"><a href="#" class="close-popup"><img src="images/icons/white/menu_close.png" alt="" title="" /></a></div>
-    </div>
-    </div>
     
-    
-    <!-- Social Popup -->
-    <div class="popup popup-social">
-    <div class="content-block">
-      <h4>FOLLOW US</h4>
-      <p>Social icons solution that allows you share and increase your social popularity.</p>
-      <ul class="popup_categories">
-      <li><a href="http://twitter.com/" class="external"><img src="images/icons/yellow/twitter.png" alt="" title="" /><span>TWITTER</span></a></li>
-      <li><a href="http://www.facebook.com/" class="external"><img src="images/icons/yellow/facebook.png" alt="" title="" /><span>FACEBOOK</span></a></li>
-      <li><a href="http://plus.google.com" class="external"><img src="images/icons/yellow/gplus.png" alt="" title="" /><span>GOOGLE</span></a></li>
-      <li><a href="http://www.dribbble.com/" class="external"><img src="images/icons/yellow/dribbble.png" alt="" title="" /><span>DRIBBBLE</span></a></li>
-      <li><a href="http://www.linkedin.com/" class="external"><img src="images/icons/yellow/linkedin.png" alt="" title="" /><span>LINKEDIN</span></a></li>
-      <li><a href="http://www.pinterest.com/" class="external"><img src="images/icons/yellow/pinterest.png" alt="" title="" /><span>PINTEREST</span></a></li>
-      </ul>
-      <div class="close_popup_button"><a href="#" class="close-popup"><img src="images/icons/white/menu_close.png" alt="" title="" /></a></div>
-    </div>
-    </div>
-    
-    <!-- Shop Categories Popup -->
-    <div class="popup popup-shopcategories">
-    <div class="content-block">
-      <h4>SHOP CATEGORIES</h4>
-      <ul class="popup_categories">
-      <li><a href="shop-page2.html" class="close-popup"><img src="images/icons/yellow/bike.png" alt="" title="" /><span>BIKES</span></a></li>
-      <li><a href="shop-page2.html" class="close-popup"><img src="images/icons/yellow/car.png" alt="" title="" /><span>CARS</span></a></li>
-      <li><a href="shop-page2.html" class="close-popup"><img src="images/icons/yellow/rocket.png" alt="" title="" /><span>ROCKETS</span></a></li>
-      <li><a href="shop-page2.html" class="close-popup"><img src="images/icons/yellow/orders.png" alt="" title="" /><span>T-SHIRTS</span></a></li>
-      <li><a href="shop-page2.html" class="close-popup"><img src="images/icons/yellow/food.png" alt="" title="" /><span>FOOD</span></a></li>
-      <li><a href="shop-page2.html" class="close-popup"><img src="images/icons/yellow/drink.png" alt="" title="" /><span>DRINKS</span></a></li>
-      <li><a href="shop-page2.html" class="close-popup"><img src="images/icons/yellow/photos.png" alt="" title="" /><span>PHOTOS</span></a></li>
-      <li><a href="shop-page2.html" class="close-popup"><img src="images/icons/yellow/bus.png" alt="" title="" /><span>BUSES</span></a></li>
-      <li><a href="shop-page2.html" class="close-popup"><img src="images/icons/yellow/electronics.png" alt="" title="" /><span>ELECTRONICS</span></a></li>
-      </ul>
-      <div class="close_popup_button"><a href="#" class="close-popup"><img src="images/icons/white/menu_close.png" alt="" title="" /></a></div>
-    </div>
-    </div>
+  -----
+						<div class="form_row">
+							<div class="form_row_icon"><img src="images/icons/yellow/user.png" alt="" title="" /></div>
+							<input type="text" name="nombre" value="" class="form_input required" placeholder="nombre(s)" />
+						</div>
+						<div class="form_row">
+							<div class="form_row_icon"><img src="images/icons/yellow/user.png" alt="" title="" /></div>
+							<input type="text" name="apellido" value="" class="form_input required" placeholder="apellido(s)" />
+						</div>
+						<div class="form_row">
+							<div class="form_row_icon"><img src="images/icons/yellow/mobile.png" alt="" title="" /></div>
+							<input type="text" name="celular" value="" class="form_input" placeholder="celular" />
+						</div>
+						<div class="form_row">
+							<div class="form_row_icon"><img src="images/icons/yellow/shop.png" alt="" title="" /></div>
+							<select id="banco" name="idbanco" class="form_select"></select>
+						</div>
+						<div class="form_row">
+							<div class="form_row_icon">&nbsp;</div>
+							<input type="text" name="numerocuenta" value="" class="form_input" placeholder="N&uacute;mero de cuenta (Donde recibiras tus pagos)" />
+						</div>
+						<div id="matsreg" class="form_row table-responsive"></div>
+						<input type="hidden" id="cantmatsreg" name="cantmatsreg" value="0">
+						<input type="hidden" id="tipou" name="tipo" value="2">
+						<input type="submit" name="submit" class="form_submit" id="submit" value="Registrarse" />
+					</form>
+					<p>
+						Al registrarte est&aacute;s de acuerdo con los <a href="data/terminosasistentes.html" onclick="closeModals();">T&eacute;rminos y condiciones</a>
+						y la <a href="data/privacidad.html" onclick="closeModals();">Pol&iacute;tica de privacidad</a>
+					</p>
+				</div>
+				<div class="close_loginpopup_button"><a href="#" class="close-popup"><img src="images/icons/white/menu_close.png" alt="" title="" /></a></div>
+			</div>
+		</div>
+		<!-- Login Popup -->
+		<div class="popup popup-forgot">
+			<div class="content-block-login">
+			  	<h4>Olvidaste tu clave?</h4>
+				<div class="loginform">
+					<form id="ForgotForm" method="post">
+						<div class="form_row">
+						<div class="form_row_icon"><img src="images/icons/yellow/contact.png" alt="" title="" /></div>
+						<input type="text" name="Email" value="" class="form_input required" placeholder="email" />
+						</div>
+						<input type="submit" name="submit" class="form_submit" id="submit" value="Enviar clave" />
+					</form>
+					<div class="signup_bottom">
+						<p>Revisa tu correo y sigue las instrucciones para recuperar tu clave.</p>
+					</div>
+				</div>
+			  	<div class="close_loginpopup_button"><a href="#" class="close-popup"><img src="images/icons/white/menu_close.png" alt="" title="" /></a></div>
+			</div>
+		</div>
     
 <script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui.min.js"></script>
