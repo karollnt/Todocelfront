@@ -1,464 +1,464 @@
-" Use strict ' ;
-la función  de inicio de sesión () {
-	var usr =  documento . querySelector ( ' Js-Usuario " ). Valor ;
-	si (usr ! = ' ' ) {
-		var clave =  documento . querySelector ( ' Js-Clave ' ). valor ;
-		Clave =  MD5 (clave);
-		$ . Ajax ({
-			Tipo :  " poste " ,
-			url : waooserver + " / Sesiones / inicio de sesión " ,
-			tipoDatos :  " json " ,
-			Datos : {nick : usr, clave : clave},
-			el éxito :  la función ( resp ) {
-				si ( resp . msg  ==  " ok " ) {
-					$ ( " #loginimg " .) Prop ( " src " , " images / icons / azul / logout.png " );
-					$ ( " #loginsp " ). Html ( " Cerrar sesion y oacute; n " );
-					myApp . closeModal ( ' .popup-login ' );
-					var NCK =  $ ( " entrada #LoginForm [name = 'nick'] " ). val ();
-					$ ( " #LoginForm " ) [ 0 ]. Restablecer ();
-					ventana . localStorage . setItem ( " nick " , NCK);
-					$ ( " #loginimg " ). Progenitor (). Desenlazar ( ' clic ' );
-					$ ( " #loginimg " ). Progenitor (). Bind ( ' clic ' , la función () { Salir ();});
-					$ ( " #snck " ). Html (NCK);
-					cambiaIconosAsesor (NCK);
-					contarNotificacionesSinLeer ();
-					tareanotificaciones =  setInterval ( función () { contarNotificacionesSinLeer ();}, 60000 );
-					colocarAvatar ( ' .user_avatar img ' );
-					verificaRedirect (NCK);
-					actualizarToken ();
+'use strict';
+function login(){
+	var usr = document.querySelector('.js-usuario').value;
+	if(usr!=''){
+		var clave = document.querySelector('.js-clave').value;
+		clave = md5(clave);
+		$.ajax({
+			type: "post",
+			url: waooserver+"/sesiones/login",
+			dataType: "json",
+			data: {nickname:usr,clave:clave},
+			success: function(resp) {
+				if(resp.msg == "ok"){
+					$("#loginimg").prop("src","images/icons/blue/logout.png");
+					$("#loginsp").html("Cerrar sesi&oacute;n");
+					myApp.closeModal('.popup-login');
+					var nck = $("#LoginForm input[name='nickname']").val();
+					$("#LoginForm")[0].reset();
+					window.localStorage.setItem("nickname",nck);
+					$("#loginimg").parent().unbind('click');
+					$("#loginimg").parent().bind('click',function(){logout();});
+					$("#snck").html(nck);
+					cambiaIconosAsesor(nck);
+					contarNotificacionesSinLeer();
+					tareanotificaciones = setInterval(function(){contarNotificacionesSinLeer();},60000);
+					colocarAvatar('.user_avatar img');
+					verificaRedirect(nck);
+					actualizarToken();
 				}
-				otra  alerta ( resp . msg );
+				else alert(resp.msg);
 			},
-			Error :  la función ( e ) {
-				alerta ( " Error: '  +  e . mensaje );
+			error: function(e) {
+				alert('Error: ' + e.message);
 			}
 		});
 	}
-	otra cosa {
-		alerta ( " Escribá ONU Nombre de usuario " );
+	else{
+		alert("Escriba un nombre de usuario");
 	}
 }
 
-la función  de cierre de sesión () {
-	ventana . localStorage . removeItem ( " nick " );
-	$ ( " #loginimg " .) Prop ( " src " , " images / icons / azul / user.png " );
-	$ ( " #loginsp " ). Html ( " Iniciar sesion y oacute; n " );
-	myApp . emergente ( " .popup-login " );
-	$ ( " #loginimg " ). Progenitor (). Bind ( ' clic ' , la función () { myApp . Emergente ( " .popup-login " );});
-	clearInterval (tareanotificaciones);
-	tareanotificaciones =  nula ;
-	$ ( " #snck " ). Html ( " - " );
+function logout(){
+	window.localStorage.removeItem("nickname");
+	$("#loginimg").prop("src","images/icons/blue/user.png");
+	$("#loginsp").html("Iniciar sesi&oacute;n");
+	myApp.popup(".popup-login");
+	$("#loginimg").parent().bind('click',function(){myApp.popup(".popup-login");});
+	clearInterval(tareanotificaciones);
+	tareanotificaciones = null;
+	$("#snck").html("-");
 }
 
-función de  registro () {
-	var Datos =  $ ( " #RegisterForm " .) serializar ();
-	$ . Ajax ({
-		Tipo :  " poste " ,
-		url : waooserver + " / Usuarios / crearUsuario " ,
-		tipoDatos :  " json " ,
-		datos : Datos,
-		el éxito :  la función ( resp ) {
-			alerta ( resp . msg );
-			$ ( " #RegisterForm " ) [ 0 ]. Restablecer ();
-			misendbird . PreInit ( $ ( ' Js-user-reg ' ). val ());
-			ubicación . href  =  ' index.html ' ;
+function register(){
+	var datos = $("#RegisterForm").serialize();
+	$.ajax({
+		type: "post",
+		url: waooserver+"/usuarios/crearUsuario",
+		dataType: "json",
+		data: datos,
+		success: function(resp) {
+			alert(resp.msg);
+			$("#RegisterForm")[0].reset();
+			misendbird.preInit($('.js-user-reg').val());
+			location.href = 'index.html';
 		},
-		Error :  la función ( e ) {
-			alerta ( " Error: '  +  e . mensaje );
+		error: function(e) {
+			alert('Error: ' + e.message);
 		}
 	});
 }
 
-función  register2 () {
-	var Datos =  $ ( " # RegisterForm2 " ). serializar ();
-	$ . Ajax ({
-		Tipo :  " poste " ,
-		url : waooserver + " / Usuarios / crearUsuario " ,
-		tipoDatos :  " json " ,
-		datos : Datos,
-		el éxito :  la función ( resp ) {
-			alerta ( resp . msg );
-			$ ( " # RegisterForm2 " ) [ 0 ]. Restablecer ();
-			misendbird . PreInit ( $ ( ' Js-asistente-reg ' ). val ());
-			ubicación . href  =  ' index.html ' ;
+function register2(){
+	var datos = $("#RegisterForm2").serialize();
+	$.ajax({
+		type: "post",
+		url: waooserver+"/usuarios/crearUsuario",
+		dataType: "json",
+		data: datos,
+		success: function(resp) {
+			alert(resp.msg);
+			$("#RegisterForm2")[0].reset();
+			misendbird.preInit($('.js-assistant-reg').val());
+			location.href = 'index.html';
 		},
-		Error :  la función ( e ) {
-			alerta ( " Error: '  +  e . mensaje );
+		error: function(e) {
+			alert('Error: ' + e.message);
 		}
 	});
 }
 
-funcionar  verificarLog () {
-	var loggedin =  ventana . localStorage . getItem ( " nick " );
-	si (loggedin) volver  verdadera ;
-	otra cosa  volver  falsa ;
+function verificarLog(){
+	var loggedin = window.localStorage.getItem("nickname");
+	if(loggedin) return true;
+	else return false;
 }
 
-función  verificaRedirect ( apodo ) {
-	$ . Ajax ({
-		Tipo :  " poste " ,
-		url : waooserver + " / Usuarios / tipoUsuario " ,
-		tipoDatos :  " json " ,
-		Datos : {nick : nick},
-		el éxito :  la función ( resp ) {
-			si ( resp . de error ) de alerta ( " Error: '  +  resp . de error );
-			otra cosa  si ( resp . tipo == 1 ) {
-				cargaPagina ( ' data / crearsolicitud.html ' , 2 );
-				misendbird . PreInit (apodo);
+function verificaRedirect(nickname) {
+	$.ajax({
+		type: "post",
+		url: waooserver+"/usuarios/tipoUsuario",
+		dataType: "json",
+		data: {nickname:nickname},
+		success: function(resp) {
+			if(resp.error) alert('Error: ' + resp.error);
+			else if(resp.tipo==1) {
+				cargaPagina('data/crearsolicitud.html',2);
+				misendbird.preInit(nickname);
 			}
-			otra cosa {
-				cargaPagina ( ' index.html ' , 0 );
-				setTimeout ( función () {
-					misendbird . init ( 0 );
-					misendbird . setChannel ( ' ' );
-					misendbird . setAssistant (apodo);
-					misendbird . obtenerDireccionCanalChat ();
-				}, 1000 );
+			else {
+				cargaPagina('index.html',0);
+				setTimeout(function () {
+					misendbird.init(0);
+					misendbird.setChannel('');
+					misendbird.setAssistant(nickname);
+					misendbird.obtenerDireccionCanalChat();
+				},1000);
 			}
 		},
-		Error :  la función ( e ) {
-			alerta ( " Error: '  +  e . mensaje );
+		error: function(e) {
+			alert('Error: ' + e.message);
 		}
 	});
 }
 
-función  verificaRedirect2 ( apodo ) {
-	si (apodo) {
-		$ . Ajax ({
-			Tipo :  " poste " ,
-			url : waooserver + " / Usuarios / tipoUsuario " ,
-			tipoDatos :  " json " ,
-			Datos : {nick : nick},
-			el éxito :  la función ( resp ) {
-				si ( resp . de error ) de alerta ( " Error: '  +  resp . de error );
-				otra cosa  si ( resp . tipo == 1 ) {
-					$ ( ' Js-recarga ' ). RemoveClass ( ' ocultos ' );
+function verificaRedirect2(nickname) {
+	if(nickname){
+		$.ajax({
+			type: "post",
+			url: waooserver+"/usuarios/tipoUsuario",
+			dataType: "json",
+			data: {nickname:nickname},
+			success: function(resp) {
+				if(resp.error) alert('Error: ' + resp.error);
+				else if(resp.tipo==1){
+					$('.js-recharge').removeClass('hidden');
 				}
-				otra cosa {
-					$ ( ' Js-recarga ' ). AddClass ( ' escondido ' );
+				else{
+					$('.js-recharge').addClass('hidden');
 				}
 			},
-			Error :  la función ( e ) {
-				alerta ( " Error: '  +  e . mensaje );
+			error: function(e) {
+				alert('Error: ' + e.message);
 			}
 		});
 	}
 }
 
-función  cambiaIconosAsesor ( apodo ) {
-	si (apodo) {
-		$ . Ajax ({
-			Tipo :  " poste " ,
-			url : waooserver + " / Usuarios / tipoUsuario " ,
-			tipoDatos :  " json " ,
-			Datos : {nick : nick},
-			el éxito :  la función ( resp ) {
-				si ( resp . de error ) de alerta ( " Error: '  +  resp . de error );
-				otra cosa {
-					si ( resp . tipo == 2 ) {
-						$ ( ' Js-asistencia-historia ' ). RemoveClass ( ' escondido ' );
-						$ ( " #crsolspn " ). Html ( " Solicitudes Libres " );
+function cambiaIconosAsesor(nickname){
+	if(nickname){
+		$.ajax({
+			type: "post",
+			url: waooserver+"/usuarios/tipoUsuario",
+			dataType: "json",
+			data: {nickname:nickname},
+			success: function(resp) {
+				if(resp.error) alert('Error: ' + resp.error);
+				else{
+					if(resp.tipo==2){
+						$('.js-assistance-history').removeClass('hidden');
+						$("#crsolspn").html("Solicitudes libres");
 					}
-					otra cosa  si ( resp . tipo == 1 ) {
-						$ ( " #crsolspn " ). Html ( " Crear Solicitud " );
-						$ ( ' Js-asistencia-historia ' .) AddClass ( ' escondido ' );
+					else if(resp.tipo==1){
+						$("#crsolspn").html("Crear solicitud");
+						$('.js-assistance-history').addClass('hidden');
 					}
 				}
 			},
-			Error :  la función ( e ) {
-				alerta ( " Error: '  +  e . mensaje );
+			error: function(e) {
+				alert('Error: ' + e.message);
 			}
 		});
 	}
-	otra cosa {
-		verifcarga ();
+	else{
+		verifcarga();
 	}
 }
 
-función  cargarBancoSelect ( ID ) {
-	$ ( " # " + Id). Html ( ' ' );
-	$ . Ajax ({
-		Tipo :  " poste " ,
-		url : waooserver + " / Bancos / listaBancos " ,
-		tipoDatos :  " json " ,
-		datos :  " " ,
-		el éxito :  la función ( resp ) {
-			si ( resp . de error ) $ ( " # " + id). append ( " <option value =" 0 "> " + resp . de error + " </ option> " );
-			otra cosa {
-				$ . Cada uno ( resp . Bancos , la función ( i , v ) {
-					$ ( " # " + Id). Append ( " <option value = ' " + v . Identificación + " '> " + v . Nombre + " </ option> " );
+function cargarBancoSelect(id){
+	$("#"+id).html('');
+	$.ajax({
+		type: "post",
+		url: waooserver+"/bancos/listaBancos",
+		dataType: "json",
+		data: "",
+		success: function(resp) {
+			if(resp.error) $("#"+id).append("<option value='0'>"+resp.error+"</option>");
+			else{
+				$.each(resp.bancos,function(i,v){
+					$("#"+id).append("<option value='"+v.id+"'>"+v.nombre+"</option>");
 				});
 			}
 		},
-		Error :  la función ( e ) {
-			alerta ( " Error al conectar Presentación: '  +  e . mensaje );
+		error: function(e) {
+			alert('Error al conectar: ' + e.message);
 		}
 	});
 }
 
-función  listaChecksMateria ( ID ) {
-	$ ( " # " + Id). Html ( ' Buscando ' );
-	$ . Ajax ({
-		Tipo :  " poste " ,
-		url : waooserver + " / Materias / listarMaterias " ,
-		tipoDatos :  " json " ,
-		datos :  " " ,
-		el éxito :  la función ( resp ) {
-			si ( resp . de error ) $ ( " # " + id). html ( " <div class = 'alerta alerta de peligro"> " + resp . de error + " </ div> " );
-			otra cosa {
-				$ ( " # " + Id). Html ( " <table id = 'tmatsreg' class = 'table-condensado mesa"> <caption> <b> Materias en las Que Participar y aacute; s </ b> </ caption> < / table> " );
-				var colrwn =  " " ;
-				var , reglas =  resp . Materias . de longitud ;
-				var regsf =  3 ;
-				$ . Cada uno ( resp . Materias , la función ( i , v ) {
-					si (i == 0  || i % regsf == 0 ) {
-						si (i > 0 ) colrwn + =  " </ tr> " ;
-						colrwn + =  " <tr> " ;
+function listaChecksMateria(id){
+	$("#"+id).html('Buscando');
+	$.ajax({
+		type: "post",
+		url: waooserver+"/materias/listarMaterias",
+		dataType: "json",
+		data: "",
+		success: function(resp) {
+			if(resp.error) $("#"+id).html("<div class='alert alert-danger'>"+resp.error+"</div>");
+			else{
+				$("#"+id).html("<table id='tmatsreg' class='table table-condensed'><caption><b>Materias en las que participar&aacute;s</b></caption></table>");
+				var colrwn = "";
+				var regs = resp.materias.length;
+				var regsf = 3;
+				$.each(resp.materias,function(i,v){
+					if(i==0 || i%regsf==0){
+						if(i>0) colrwn += "</tr>";
+						colrwn += "<tr>";
 					}
-					colrwn + =  " <td> <= clase de etiqueta 'casilla de verificación-etiqueta del elemento de contenido' style = 'display: inline;"> "
-						+ " <Input type =" checkbox "id =" mat_ " + i + " "name = 'mat_ " + i + " ' value = ' " + v . Identificación + " "> "
-						+ " <Div class =" elemento-media '> "
-							+ " <I class =" icon-form-casilla de verificación "> </ i> "
-						+ " </ Div> "
-						+ " <Div class =" item-interior "> "
-                              + " <Div class = 'tema-título"> " + v . Nombre + " </ div> "
-						+ " </ Div> "
-					+ " </ Label> </ td> " ;
-					si (i > = ( resp . Materias . de longitud - 1 )) {
-						si (regs % regsf > 0 ) {
-							var fil =  Math . redonda (regs / regsf);
-							var resto = (fil * regsf) - , reglas;
-							para ( var i1 = 0 ; i1 < reposo; i1 ++ ) {
-								colrwn + =  " <td> </ td> " ;
+					colrwn += "<td><label class='label-checkbox item-content' style='display:inline;'>"
+						+"<input type='checkbox' id='mat_"+i+"' name='mat_"+i+"' value='"+v.id+"'> "
+						+"<div class='item-media'>"
+							+"<i class='icon icon-form-checkbox'></i>"
+						+"</div>"
+						+"<div class='item-inner'>"
+                              +"<div class='item-title'> "+v.nombre+"</div>"
+						+"</div>"
+					+"</label></td>";
+					if(i>=(resp.materias.length-1)){
+						if(regs%regsf>0){
+							var fil = Math.round(regs/regsf);
+							var rest = (fil*regsf) - regs;
+							for(var i1=0;i1<rest;i1++){
+								colrwn += "<td></td>";
 							}
 						}
-						colrwn + =  " </ tr> " ;
+						colrwn += "</tr>";
 					}
 				});
-				$ ( " #cantmatsreg " ). Val (reg);
-				$ ( " #tmatsreg " .) Anexar (colrwn);
+				$("#cantmatsreg").val(regs);
+				$("#tmatsreg").append(colrwn);
 			}
 		},
-		Error :  la función ( e ) {
-			$ ( " # " + Id). Html ( " <div class = 'alerta alerta de peligro"> Error al conectar Presentación: " + e . Mensaje + " </ div> " );
+		error: function(e) {
+			$("#"+id).html("<div class='alert alert-danger'>Error al conectar: "+e.message+"</div>");
 		}
 	});
 }
 
-función  contarNotificacionesSinLeer () {
-	var apodo =  ventana . localStorage . getItem ( " nick " );
-	$ . Ajax ({
-		Tipo :  " poste " ,
-		url : waooserver + " / Usuarios / notificacionesNoLeidasCant " ,
-		tipoDatos :  " json " ,
-		Datos : {nick : nick},
-		el éxito :  la función ( resp ) {
-			si ( resp . de error ) de alerta ( " Error: '  +  resp . de error );
-			otra cosa {
-				$ ( " #notifcounter " ). Html ( resp . Msg );
+function contarNotificacionesSinLeer(){
+	var nickname = window.localStorage.getItem("nickname");
+	$.ajax({
+		type: "post",
+		url: waooserver+"/usuarios/notificacionesNoLeidasCant",
+		dataType: "json",
+		data: {nickname:nickname},
+		success: function(resp) {
+			if(resp.error) alert('Error: ' + resp.error);
+			else{
+				$("#notifcounter").html(resp.msg);
 			}
 		},
-		Error :  la función ( e ) {
-			alerta ( " Error al conectar Presentación: '  +  e . mensaje );
+		error: function(e) {
+			alert('Error al conectar: ' + e.message);
 		}
 	});
 }
 
-función  listarNotificacionesSinLeer () {
-	var apodo =  ventana . localStorage . getItem ( " nick " );
-	var iddiv =  " listanotificaciones " ;
-	$ ( " # " + Iddiv). Html ( " " );
-	$ . Ajax ({
-		Tipo :  " poste " ,
-		url : waooserver + " / Usuarios / notificacionesNoLeidas " ,
-		tipoDatos :  " json " ,
-		Datos : {nick : nick},
-		el éxito :  la función ( resp ) {
-			si ( resp . de error ) de alerta ( " Error: '  +  resp . de error );
-			otra cosa {
-				$ ( " # " + Iddiv). Html ( " <ul class =" posts "> </ ul> " );
-				si ( resp . msg == " No se encontraron Resultados " ) {
-					$ ( " # " + Iddiv). Html ( " <div class = 'alerta alerta de peligro"> " + resp . Msg + " </ div> " );
+function listarNotificacionesSinLeer(){
+	var nickname = window.localStorage.getItem("nickname");
+	var iddiv = "listanotificaciones";
+	$("#"+iddiv).html("");
+	$.ajax({
+		type: "post",
+		url: waooserver+"/usuarios/notificacionesNoLeidas",
+		dataType: "json",
+		data: {nickname:nickname},
+		success: function(resp) {
+			if(resp.error) alert('Error: ' + resp.error);
+			else{
+				$("#"+iddiv).html("<ul class='posts'></ul>");
+				if(resp.msg=="No se encontraron resultados"){
+					$("#"+iddiv).html("<div class='alert alert-danger'>"+resp.msg+"</div>");
 				}
-				var json =  JSON . analizar ( ' [ ' + resp . msg + ' ] ' );
-				$ . Cada uno (JSON, la función ( i2 , v ) {
-					var SPL1 = ( v . Fecha ). división ( "  " );
-					var SPL2 = SPL1 [ 0 ]. división ( " - " );
-					$ ( " # " + Iddiv + " UL " ). Append ( " <li> "
-						+ " <Div class = 'posición: inicial importante;' 'post_entry' style => "
-							+ " <Div class = 'posición: inicial importante;' 'post_date' style => "
-								+ " <br> <Span class =" mes "> " + SPL2 [ 0 ] + " - " + SPL2 [ 1 ] + " <span> "
-								+ " <Span class =" día "> " + SPL2 [ 2 ] + " <span> "
-							+ " </ Div> "
-							+ " <Div class = 'posición: inicial importante;' 'POST_TITLE' style => "
-								+ " <H2> "
-									+ (( V . Titulo ). Longitud > 18 ? ( V . Titulo ). Substr ( 0 , 15 ) + " ... " : v . Titulo )
-								+ " </ H2> "
-								+ " " + V . Mensaje + " <br> "
-								+ ( V . Tipo == 1 ?
-									" Botón <class = 'btn btn-primaria BTN-block' onclick = 'marcarLeida ( " + v . Identificación + " , " + v . Idtrabajo + " );"> Ver </ botón> Ofertas "
-									: " <Botón class = 'btn btn-primaria BTN-block' onclick = 'verModalSolicitud ( " + v . Idtrabajo + " , 1);"> Ver Detalles </ botón> " )
-							+ " </ Div> "
-						+ " </ Div> "
-					+ " </ Li> " );
+				var json = JSON.parse('['+resp.msg+']');
+				$.each(json,function(i2,v){
+					var spl1 = (v.fecha).split(" ");
+					var spl2 = spl1[0].split("-");
+					$("#"+iddiv+" ul").append("<li>"
+						+"<div class='post_entry' style='position:initial !important;'>"
+							+"<div class='post_date' style='position:initial !important;'>"
+								+"<br><span class='month'>"+spl2[0]+"-"+spl2[1]+"<span>"
+								+"<span class='day'>"+spl2[2]+"<span>"
+							+"</div>"
+							+"<div class='post_title' style='position:initial !important;'>"
+								+"<h2>"
+									+((v.titulo).length>18?(v.titulo).substr(0,15)+"...":v.titulo)
+								+"</h2>"
+								+""+v.mensaje+"<br><br>"
+								+(v.tipo==1?
+									"<button class='btn btn-primary btn-block' onclick='marcarLeida("+v.id+","+v.idtrabajo+");'>Ver ofertas</button>"
+									:"<button class='btn btn-primary btn-block' onclick='verModalSolicitud("+v.idtrabajo+",1);'>Ver detalles</button>")
+							+"</div>"
+						+"</div>"
+					+"</li>");
 				});
 			}
 		},
-		Error :  la función ( e ) {
-			$ ( " # " + Iddiv). Html ( " Error al conectar Presentación: " + e . Mensaje );
+		error: function(e) {
+			$("#"+iddiv).html("Error al conectar: "+e.message);
 		}
 	});
 }
 
-función  marcarLeida ( Identificación , idtrabajo ) {
-	ventanaOfertas (idtrabajo);
+function marcarLeida(id,idtrabajo){
+	ventanaOfertas(idtrabajo);
 }
 
-funcionar  cargarDatosUsuario () {
-	var apodo =  ventana . localStorage . getItem ( " nick " );
-	$ ( " #dtcnt " ). Ocultar ();
-	cargarBancoSelect ( " banct " );
-	$ ( " #ncks " ). Val (apodo);
-	$ ( ' #formupdate ' ). En ( ' enviar ' , la función ( e ) {
-		e . preventDefault ();
-		modificarUsuario ();
-		volver  falsa ;
+function cargarDatosUsuario(){
+	var nickname = window.localStorage.getItem("nickname");
+	$("#dtcnt").hide();
+	cargarBancoSelect("banct");
+	$("#ncks").val(nickname);
+	$('#formupdate').on('submit', function(e) {
+		e.preventDefault();
+		modificarUsuario();
+		return false;
 	});
-	$ . Ajax ({
-		Tipo :  ' palo ' ,
-		url : waooserver + " / Usuarios / datosUsuario " ,
-		tipoDatos :  " json " ,
-		Datos : {nick : nick},
-		el éxito  :  la función ( resp ) {
-			var usr =  resp . Usuarios ;
-			$ . Cada uno (usr, la función ( i2 , v ) {
-				$ ( " # Tab1 .contactform entrada [name = 'nombre'] " ). Val ( v . Nombre );
-				$ ( " # Tab1 .contactform entrada [name = 'Apellido'] " ). Val ( v . Apellido );
-				colocarAvatar ( " # perfil-img " );
-				si ( v . tipo == 2 ) {
-					$ ( " #dtcnt " ). Espectáculo ();
-					$ ( " #numct " ). Val ( v . Numerocuenta );
-					$ ( " #banct " ). Val ( v . Idbanco );
+	$.ajax({
+		type : 'post',
+		url : waooserver+"/usuarios/datosUsuario",
+		dataType: "json",
+		data : {nickname:nickname},
+		success : function(resp) {
+			var usr = resp.usuarios;
+			$.each(usr,function(i2,v){
+				$("#tab1 .contactform input[name='nombre']").val(v.nombre);
+				$("#tab1 .contactform input[name='apellido']").val(v.apellido);
+				colocarAvatar("#profile-img");
+				if(v.tipo==2){
+					$("#dtcnt").show();
+					$("#numct").val(v.numerocuenta);
+					$("#banct").val(v.idbanco);
 				}
 			});
 		},
-		Error :  la función ( e ) {
-			alerta ( " Error al conectar Presentación: " + e . mensaje );
+		error: function(e) {
+			alert("Error al conectar: "+e.message);
 		}
 	});
 }
 
-función  cambiarClave () {
-	var CL1 =  $ . recortar ( $ ( " # Sep2 entrada [name = 'clave1'] " ). val ());
-	var Cl2 =  $ . recortar ( $ ( " # Sep2 entrada [name = 'clave2'] " ). val ());
-	si (CL1 ! = " "  && Cl2 ! = " " ) {
-		si (CL1 == Cl2) {
-			var apodo =  ventana . localStorage . getItem ( " nick " );
-			$ . Ajax ({
-				Tipo :  ' palo ' ,
-				url : waooserver + " / Usuarios / actualizaClave " ,
-				tipoDatos :  " json " ,
-				Datos : {nick : apodo, clave : Cl2},
-				el éxito  :  la función ( resp ) {
-					alerta ( resp . msg );
+function cambiarClave() {
+	var cl1 = $.trim($("#tab2 input[name='clave1']").val());
+	var cl2 = $.trim($("#tab2 input[name='clave2']").val());
+	if(cl1!="" && cl2!=""){
+		if(cl1==cl2){
+			var nickname = window.localStorage.getItem("nickname");
+			$.ajax({
+				type : 'post',
+				url : waooserver+"/usuarios/actualizaClave",
+				dataType: "json",
+				data : {nickname:nickname,clave:cl2},
+				success : function(resp) {
+					alert(resp.msg);
 				},
-				Error :  la función ( e ) {
-					alerta ( " Error al conectar Presentación: " + e . mensaje );
+				error: function(e) {
+					alert("Error al conectar: "+e.message);
 				}
 			});
 		}
-		otra  alerta ( " Las claves no coinciden " );
+		else alert("Las claves no coinciden");
 	}
-	otra  alerta ( " La Clave No Puede Estar en blanco " );
+	else alert("La clave no puede estar en blanco");
 }
 
-funcionar  modificarUsuario () {
-	var FormData =  nueva  FormData ( $ ( " #formupdate " ) [ 0 ]);
-	$ . Ajax ({
-		Tipo :  ' palo ' ,
-		url : waooserver + " / Usuarios / modificarUsuario " ,
-		tipoDatos :  " json " ,
-		datos : FormData,
-		asíncrono :  falso ,
-		caché :  falso ,
-		contentType :  falso ,
-		processData :  falso ,
-		el éxito  :  la función ( resp ) {
-			alerta ( resp . msg );
-			colocarAvatar ( " # perfil-img " );
+function modificarUsuario() {
+	var formData = new FormData( $("#formupdate")[0] );
+	$.ajax({
+		type : 'post',
+		url : waooserver+"/usuarios/modificarUsuario",
+		dataType : "json",
+		data : formData,
+		async : false,
+		cache : false,
+		contentType : false,
+		processData : false,
+		success : function(resp) {
+			alert(resp.msg);
+			colocarAvatar("#profile-img");
 		},
-		Error :  la función ( e ) {
-			alerta ( " Error al conectar Presentación: " + e . mensaje );
+		error: function(e) {
+			alert("Error al conectar: "+e.message);
 		}
 	});
 }
 
-función  colocarAvatar ( div ) {
-	var apodo =  ventana . localStorage . getItem ( " nick " );
-	$ . Ajax ({
-		Tipo :  ' palo ' ,
-		url : waooserver + " / Usuarios / verificaAvatar " ,
-		tipoDatos :  " json " ,
-		Datos : {nick : nick},
-		el éxito  :  la función ( resp ) {
-			var idimg =  resp . msg ;
-			si (idimg * 1 == 0 ) $ . (div) prop ( " src " , " images / default_avatar.gif " );
-			otra cosa  $ . (div) prop ( " src " , waooserver + " / Usuarios / verAvatar / " + idimg + " / " + (( Math . aleatoria () * 1000 ) / 1000 ));
+function colocarAvatar(div) {
+	var nickname = window.localStorage.getItem("nickname");
+	$.ajax({
+		type : 'post',
+		url : waooserver+"/usuarios/verificaAvatar",
+		dataType: "json",
+		data : {nickname:nickname},
+		success : function(resp) {
+			var idimg = resp.msg;
+			if(idimg*1==0) $(div).prop("src","images/default_avatar.gif");
+			else $(div).prop("src",waooserver+"/usuarios/verAvatar/"+idimg+"/"+((Math.random()*1000)/1000));
 		},
-		Error :  la función ( e ) {
-			alerta ( " Error al conectar Presentación: " + e . mensaje );
+		error: function(e) {
+			alert("Error al conectar: "+e.message);
 		}
 	});
 }
 
-función  colocarAvatarOf ( div , apodo ) {
-	$ . Ajax ({
-		Tipo :  ' palo ' ,
-		url : waooserver + " / Usuarios / verificaAvatar " ,
-		tipoDatos :  " json " ,
-		Datos : {nick : nick},
-		el éxito  :  la función ( resp ) {
-			var idimg =  resp . msg ;
-			si (idimg * 1 == 0 ) $ . (div) prop ( " src " , " images / default_avatar.gif " );
-			otra cosa  $ . (div) prop ( " src " , waooserver + " / Usuarios / verAvatar / " + idimg + " / " + (( Math . aleatoria () * 1000 ) / 1000 ));
+function colocarAvatarOf(div,nickname) {
+	$.ajax({
+		type : 'post',
+		url : waooserver+"/usuarios/verificaAvatar",
+		dataType: "json",
+		data : {nickname:nickname},
+		success : function(resp) {
+			var idimg = resp.msg;
+			if(idimg*1==0) $(div).prop("src","images/default_avatar.gif");
+			else $(div).prop("src",waooserver+"/usuarios/verAvatar/"+idimg+"/"+((Math.random()*1000)/1000));
 		},
-		Error :  la función ( e ) {
-			alerta ( " Error al conectar Presentación: " + e . mensaje );
+		error: function(e) {
+			alert("Error al conectar: "+e.message);
 		}
 	});
 }
 
-funcionar  actualizarCuenta () {
-	var idbanco =  $ ( " opción #banct: seleccionado " ). val ();
-	var numerocuenta =  $ . recortar ( $ ( " #numct " ). val ());
-	var apodo =  ventana . localStorage . getItem ( " nick " );
-	$ . Ajax ({
-		Tipo :  ' palo ' ,
-		url : waooserver + " / Usuarios / actualizarCuenta " ,
-		tipoDatos :  " json " ,
-		Datos : {nick : apodo, numerocuenta : numerocuenta, idbanco : idbanco},
-		el éxito  :  la función ( resp ) {
-			alerta ( resp . msg );
+function actualizarCuenta() {
+	var idbanco = $("#banct option:selected").val();
+	var numerocuenta = $.trim($("#numct").val());
+	var nickname = window.localStorage.getItem("nickname");
+	$.ajax({
+		type : 'post',
+		url : waooserver+"/usuarios/actualizarCuenta",
+		dataType: "json",
+		data : {nickname:nickname,numerocuenta:numerocuenta,idbanco:idbanco},
+		success : function(resp) {
+			alert(resp.msg);
 		},
-		Error :  la función ( e ) {
-			alerta ( " Error al conectar Presentación: " + e . mensaje );
+		error: function(e) {
+			alert("Error al conectar: "+e.message);
 		}
 	});
 }
 
-funcionar  actualizarToken () {
-	var contador =  ventana . localStorage . getItem ( " testigo " );
-	var usuario =  ventana . localStorage . getItem ( " nick " );
-	var plataforma =  ventana . localStorage . getItem ( " Plataforma " );
+function actualizarToken() {
+	var token = window.localStorage.getItem("token");
+	var usuario = window.localStorage.getItem("nickname");
+	var plataforma = window.localStorage.getItem("plataforma");
 
-	si (Token ! =  nula ) {
-		$ . Ajax ({
-			Tipo :  ' palo ' ,
-			url : waooserver + " / Usuarios / actualizarToken " ,
-			tipoDatos :  " json " ,
-			Datos : {contador : contador, apodo : usuario, Plataforma : Plataforma},
-			el éxito  :  la función ( resp ) {},
-			Error :  la función ( e ) {}
+	if(token != null) {
+		$.ajax({
+			type : 'post',
+			url : waooserver+"/usuarios/actualizarToken",
+			dataType: "json",
+			data : {token: token, nickname:usuario, plataforma:plataforma},
+			success : function(resp) {},
+			error: function(e) {}
 		});
 	}
 }
