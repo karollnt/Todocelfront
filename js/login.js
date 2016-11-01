@@ -11,7 +11,7 @@ function login(){
 			data: {nickname:usr,clave:clave},
 			success: function(resp) {
 				if(resp.msg == "ok"){
-					$("#loginimg").prop("src","images/icons/blue/logout.png");
+					$("#loginimg").prop("src","images/icons/yellow/logout.png");
 					$("#loginsp").html("Cerrar sesi&oacute;n");
 					myApp.closeModal('.popup-login');
 					var nck = $("#LoginForm input[name='nickname']").val();
@@ -41,7 +41,7 @@ function login(){
 
 function logout(){
 	window.localStorage.removeItem("nickname");
-	$("#loginimg").prop("src","images/icons/blue/user.png");
+	$("#loginimg").prop("src","images/icons/yellow/user.png");
 	$("#loginsp").html("Iniciar sesi&oacute;n");
 	myApp.popup(".popup-login");
 	$("#loginimg").parent().bind('click',function(){myApp.popup(".popup-login");});
