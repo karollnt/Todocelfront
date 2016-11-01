@@ -1,139 +1,140 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
-<link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" href="images/apple-touch-startup-image-640x1096.png">
-<title>Cell House - Samsung-Huawei-Hyundai</title>
-<link rel="stylesheet" href="css/framework7.css">
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="css/yellow.css">
-<link type="text/css" rel="stylesheet" href="css/swipebox.css" />
-<link type="text/css" rel="stylesheet" href="css/animations.css" />
-<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,900' rel='stylesheet' type='text/css'>
-</head>
-<body id="mobile_wrap">
-
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" href="images/apple-touch-startup-image-640x1096.png">
+    <title>Cell House - Samsung-Huawei-Hyundai</title>
+    <link rel="stylesheet" href="css/framework7.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/yellow.css">
+    <link type="text/css" rel="stylesheet" href="css/swipebox.css" />
+    <link type="text/css" rel="stylesheet" href="css/animations.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,900' rel='stylesheet' type='text/css'>
+  </head>
+  <body id="mobile_wrap">
     <div class="statusbar-overlay"></div>
-
     <div class="panel-overlay"></div>
-
     <div class="panel panel-left panel-reveal">
-         <div class="cartcontainer">
-            <h2>CART <span>(3 ITEMS)</span></h2>
-            <a href="#" class="closecart close-panel"><img src="images/icons/white/menu_close.png" alt="" title="" /></a>
+      <div class="cartcontainer">
+        <h2>CART <span>(3 ITEMS)</span></h2>
+        <a href="#" class="closecart close-panel"><img src="images/icons/white/menu_close.png" alt="" title="" /></a>
 
-            <div class="cart_item" id="cartitem1">
-                <div class="item_title"><span>01.</span> Bicycle Pedal Driven</div>
-                <div class="item_price">$100</div>
-            	<div class="item_thumb"><a href="shop-item.html" class="close-panel"><img src="images/shop_thumb1.jpg" alt="" title="" /></a></div>
-                <div class="item_qnty">
-                    <form id="myform" method="POST" action="#">
-                        <label>QUANTITY</label>
-                        <input type="button" value="-" class="qntyminus" field="quantity" />
-                        <input type="text" name="quantity" value="1" class="qnty" />
-                        <input type="button" value="+" class="qntyplus" field="quantity" />
-                    </form>
-                </div>
-                <a href="#" class="item_delete" id="cartitem1"><img src="images/icons/yellow/trash.png" alt="" title="" /></a>           </div>
+        <div class="js-cart-items">
+          <div class="cart_item" id="cartitem1">
+            <div class="item_title"><span>01.</span> Bicycle Pedal Driven</div>
+            <div class="item_price">$100</div>
+          	<div class="item_thumb"><a href="shop-item.html" class="close-panel"><img src="images/shop_thumb1.jpg" alt="" title="" /></a></div>
+            <div class="item_qnty">
+              <form id="myform" method="POST" action="#">
+                <label>QUANTITY</label>
+                <input type="button" value="-" class="qntyminus" field="quantity" />
+                <input type="text" name="quantity" value="1" class="qnty" />
+                <input type="button" value="+" class="qntyplus" field="quantity" />
+              </form>
+            </div>
+            <a href="#" class="item_delete" id="cartitem1"><img src="images/icons/yellow/trash.png" alt="" title="" /></a>
+          </div>
 
-            <div class="cart_item" id="cartitem2">
-                <div class="item_title"><span>02.</span> Yellow Car </div>
-                <div class="item_price">$1200</div>
-            	<div class="item_thumb"><a href="shop-item.html" class="close-panel"><img src="images/shop_thumb2.jpg" alt="" title="" /></a></div>
-                <div class="item_qnty">
-                    <form id="myform" method="POST" action="#">
-                        <label>QUANTITY</label>
-                        <input type="button" value="-" class="qntyminus" field="quantity2" />
-                        <input type="text" name="quantity2" value="1" class="qnty" />
-                        <input type="button" value="+" class="qntyplus" field="quantity2" />
-                    </form>
-                </div>
-                <a href="#" class="item_delete" id="cartitem2"><img src="images/icons/yellow/trash.png" alt="" title="" /></a>            </div>
+          <div class="cart_item" id="cartitem2">
+            <div class="item_title"><span>02.</span> Yellow Car </div>
+            <div class="item_price">$1200</div>
+          	<div class="item_thumb"><a href="shop-item.html" class="close-panel"><img src="images/shop_thumb2.jpg" alt="" title="" /></a></div>
+            <div class="item_qnty">
+              <form id="myform" method="POST" action="#">
+                <label>QUANTITY</label>
+                <input type="button" value="-" class="qntyminus" field="quantity2" />
+                <input type="text" name="quantity2" value="1" class="qnty" />
+                <input type="button" value="+" class="qntyplus" field="quantity2" />
+              </form>
+            </div>
+            <a href="#" class="item_delete" id="cartitem2"><img src="images/icons/yellow/trash.png" alt="" title="" /></a>
+          </div>
 
-            <div class="cart_item" id="cartitem3">
-                <div class="item_title"><span>03.</span> Summer T-Shirt</div>
-                <div class="item_price">$20</div>
-            	<div class="item_thumb"><a href="shop-item.html" class="close-panel"><img src="images/shop_thumb3.jpg" alt="" title="" /></a></div>
-                <div class="item_qnty">
-                    <form id="myform" method="POST" action="#">
-                        <label>QUANTITY</label>
-                        <input type="button" value="-" class="qntyminus" field="quantity3" />
-                        <input type="text" name="quantity3" value="1" class="qnty" />
-                        <input type="button" value="+" class="qntyplus" field="quantity3" />
-                    </form>
-                </div>
-                <a href="#" class="item_delete" id="cartitem3"><img src="images/icons/yellow/trash.png" alt="" title="" /></a>             </div>
+          <div class="cart_item" id="cartitem3">
+            <div class="item_title"><span>03.</span> Summer T-Shirt</div>
+            <div class="item_price">$20</div>
+          	<div class="item_thumb"><a href="shop-item.html" class="close-panel"><img src="images/shop_thumb3.jpg" alt="" title="" /></a></div>
+            <div class="item_qnty">
+              <form id="myform" method="POST" action="#">
+                <label>QUANTITY</label>
+                <input type="button" value="-" class="qntyminus" field="quantity3" />
+                <input type="text" name="quantity3" value="1" class="qnty" />
+                <input type="button" value="+" class="qntyplus" field="quantity3" />
+              </form>
+            </div>
+            <a href="#" class="item_delete" id="cartitem3"><img src="images/icons/yellow/trash.png" alt="" title="" /></a>
+          </div>
+        </div>
 
-              <div class="carttotal">
-                  <div class="carttotal_row">
-                  <div class="carttotal_left">CART TOTAL</div>  <div class="carttotal_right">$ 1,320.00</div>
-                  </div>
-                  <div class="carttotal_row">
-                  <div class="carttotal_left">VAT (15%)</div>  <div class="carttotal_right">$ 198.00</div>
-                  </div>
-                  <div class="carttotal_row_last">
-                  <div class="carttotal_left">TOTAL</div> <div class="carttotal_right">$ 1,518.00</div>
-                  </div>
-              </div>
+        <div class="carttotal">
+          <div class="carttotal_row">
+          <div class="carttotal_left">Subtotal</div>  <div class="carttotal_right js-cart-subtotal">$ 1,320.00</div>
+          </div>
+          <div class="carttotal_row">
+          <div class="carttotal_left">IVA (16%)</div>  <div class="carttotal_right js-cart-vat">$ 198.00</div>
+          </div>
+          <div class="carttotal_row_last">
+          <div class="carttotal_left">Total</div> <div class="carttotal_right js-cart-total">$ 1,518.00</div>
+          </div>
+        </div>
 
-              <a href="checkout.html" class="checkout close-panel">PROCEED TO CHECKOUT</a>           </div>
+        <a href="checkout.html" class="checkout close-panel">PROCEED TO CHECKOUT</a>
+      </div>
     </div>
 
     <div class="panel panel-right panel-reveal">
-          <div class="user_login_info">
-                <div class="user_thumb">
-                <img src="images/profile.jpg" alt="" title="" />
-                  <div class="user_details">
-                   <p>Hi, <span>Samantha</span></p>
-                  </div>
-                  <div class="user_avatar"><img src="images/avatar.jpg" alt="" title="" /></div>
-                </div>
-
-                  <nav class="user-nav">
-                    <ul>
-                      <li><a href="features.html" class="close-panel"><img src="images/icons/yellow/users.png" alt="" title="" /><span>EDIT PROFILE</span></a></li>
-                      <li><a href="features.html" class="close-panel"><img src="images/icons/yellow/briefcase.png" alt="" title="" /><span>MY ACCOUNT</span></a></li>
-                      <li><a href="features.html" class="close-panel"><img src="images/icons/yellow/orders.png" alt="" title="" /><span>SHOP ORDERS</span></a></li>
-                      <li><a href="features.html" class="close-panel"><img src="images/icons/yellow/favorites.png" alt="" title="" /><span>FAVORITES</span></a></li>
-                      <li><a href="features.html" class="close-panel"><img src="images/icons/yellow/twitter.png" alt="" title="" /><span>SOCIAL</span></a></li>
-                      <li><a href="features.html" class="close-panel"><img src="images/icons/yellow/users.png" alt="" title="" /><span>FOLLOWERS</span></a></li>
-                      <li><a href="features.html" class="close-panel"><img src="images/icons/yellow/message.png" alt="" title="" /><span>MESSAGES</span></a></li>
-                      <li><a href="index.html" class="close-panel"><img src="images/icons/yellow/logout.png" alt="" title="" /><span>LOGOUT</span></a></li>
-                    </ul>
-                  </nav>
+      <div class="user_login_info">
+        <div class="user_thumb">
+        <img src="images/profile.jpg" alt="" title="" />
+          <div class="user_details">
+           <p>Hi, <span>Samantha</span></p>
           </div>
+          <div class="user_avatar"><img src="images/avatar.jpg" alt="" title="" /></div>
+        </div>
+
+        <nav class="user-nav">
+          <ul>
+            <li><a href="features.html" class="close-panel"><img src="images/icons/yellow/users.png" alt="" title="" /><span>EDIT PROFILE</span></a></li>
+            <li><a href="features.html" class="close-panel"><img src="images/icons/yellow/briefcase.png" alt="" title="" /><span>MY ACCOUNT</span></a></li>
+            <li><a href="features.html" class="close-panel"><img src="images/icons/yellow/orders.png" alt="" title="" /><span>SHOP ORDERS</span></a></li>
+            <li><a href="features.html" class="close-panel"><img src="images/icons/yellow/favorites.png" alt="" title="" /><span>FAVORITES</span></a></li>
+            <li><a href="features.html" class="close-panel"><img src="images/icons/yellow/twitter.png" alt="" title="" /><span>SOCIAL</span></a></li>
+            <li><a href="features.html" class="close-panel"><img src="images/icons/yellow/users.png" alt="" title="" /><span>FOLLOWERS</span></a></li>
+            <li><a href="features.html" class="close-panel"><img src="images/icons/yellow/message.png" alt="" title="" /><span>MESSAGES</span></a></li>
+            <li><a href="index.html" class="close-panel"><img src="images/icons/yellow/logout.png" alt="" title="" /><span>LOGOUT</span></a></li>
+          </ul>
+        </nav>
+      </div>
     </div>
 
     <div class="views">
-
       <div class="view view-main">
-
         <div class="pages">
-
           <div data-page="index" class="page homepage">
             <div class="page-content">
-					<div class="logo">
-					  <h1>Cell House</h1><span>Samsung-Huawei-Hyundai</span></div>
-                       <nav class="main-nav">
-                        <ul>
-                          <li><a href="#" data-popup=".popup-login" class="open-popup"><img src="images/icons/yellow/user.png" alt="" title="" /><span>LOGIN</span></a></li>
-
-                          <li><a href="shop.html"><img src="images/icons/yellow/shop.png" alt="" title="" /><span>TIENDA</span></a></li>
-                          <li><a href="#" data-panel="left" class="open-panel"><img src="images/icons/yellow/cart.png" alt="" title="" /><span>CARRITO</span><div class="cartitems">3</div></a></li>
-                          <li><a href="contact.html"><img src="images/icons/yellow/contact.png" alt="" title="" /><span>CONTACTENOS</span></a></li>
-                        </ul>
-                      </nav>
+    					<div class="logo">
+    					  <h1>TodoCel</h1>
+                <span>Samsung-Huawei-Hyundai</span>
+              </div>
+               <nav class="main-nav">
+                <ul>
+                  <li><a href="#" data-popup=".popup-login" class="open-popup"><img src="images/icons/yellow/user.png" alt="" title="" /><span>LOGIN</span></a></li>
+                  <li><a href="shop.html"><img src="images/icons/yellow/shop.png" alt="" title="" /><span>TIENDA</span></a></li>
+                  <li><a href="#" data-panel="left" class="open-panel"><img src="images/icons/yellow/cart.png" alt="" title="" /><span>CARRITO</span><div class="cartitems">3</div></a></li>
+                  <li><a href="contact.html"><img src="images/icons/yellow/contact.png" alt="" title="" /><span>CONTACTENOS</span></a></li>
+                </ul>
+              </nav>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-	<!-- Login Popup -->
+	   <!-- Login Popup -->
 		<div class="popup popup-login">
 			<div class="content-block-login">
 			<h4>Inicia sesi&oacute;n</h4>
@@ -153,103 +154,49 @@
 					<div class="signup_bottom">
 						<p>No tienes una cuenta?</p>
 						<a href="#" data-popup=".popup-signup" class="open-popup">Reg&iacute;strate ac&aacute;!</a>
-						<p>&nbsp;</p>
-						<p>Quieres ser un asesor? <a href="#" data-popup=".popup-signup2" class="open-popup">Reg&iacute;strate ac&aacute;!</a></p>
 					</div>
 				</div>
 				<div id="closelogin" class="close_loginpopup_button"><a href="#" class="close-popup"><img src="images/icons/yellow/menu_close.png" alt="" title="" /></a></div>
 			</div>
 		</div>
 
-    ----
-				<div id="fregistro" class="content-block-login">
-				<h4>Reg&iacute;strate</h4>
-				<div class="loginform">
-					<form id="RegisterForm" method="post">
-						<div class="form_row">
-							<div class="form_row_icon"><img src="images/icons/yellow/user.png" alt="" title="" /></div>
-							<input type="text" name="nombre" value="" class="form_input required" placeholder="nombre y apellido" />
-						</div>
-						<div class="form_row">
-							<div class="form_row_icon"><img src="images/icons/yellow/user.png" alt="" title="" /></div>
-							<input type="text" name="nickname" value="" class="form_input required js-user-reg" placeholder="nickname" />
-						</div>
-						<div class="form_row">
-							<div class="form_row_icon"><img src="images/icons/yellow/lock.png" alt="" title="" /></div>
-							<input type="password" name="clave" value="" class="form_input required" placeholder="password" />
-						</div>
-						<div class="form_row">
-							<div class="form_row_icon"><img src="images/icons/yellow/contact.png" alt="" title="" /></div>
-							<input type="text" name="email" value="" class="form_input required" placeholder="email" />
-						</div>
-						<input type="submit" name="submit" class="form_submit" id="submit" value="Registrarse" />
-					</form>
-					<p>
-						Al registrarte est&aacute;s de acuerdo con los <a href="data/terminos.html" onclick="closeModals();">T&eacute;rminos y condiciones</a>
-						y la <a href="data/privacidad.html" onclick="closeModals();">Pol&iacute;tica de privacidad</a>
-					</p>
-				</div>
-				<div class="close_loginpopup_button"><a href="#" class="close-popup"><img src="images/icons/blue/menu_close.png" alt="" title="" /></a></div>
-			</div>
-		</div>
-		<!-- Register assistant Popup -->
-		<div class="popup popup-signup2">
-			<div class="content-block-login">
-				<h4>Reg&iacute;strate</h4>
-				<div class="loginform contactform">
-					<form id="RegisterForm2" method="post">
-						<div class="form_row">
-							<div class="form_row_icon"><img src="images/icons/yellow/user.png" alt="" title="" /></div>
-							<input type="text" name="nickname" value="" class="form_input required js-assistant-reg" placeholder="nickname" />
-						</div>
-						<div class="form_row">
-							<div class="form_row_icon"><img src="images/icons/yellow/contact.png" alt="" title="" /></div>
-							<input type="text" name="email" value="" class="form_input required" placeholder="email" />
-						</div>
-						<div class="form_row">
-							<div class="form_row_icon"><img src="images/icons/yellow/lock.png" alt="" title="" /></div>
-							<input type="password" name="clave" value="" class="form_input required" placeholder="password" />
-						</div>
+    <!-- Register form -->
+    <div class="popup popup-signup">
+      <div id="fregistro" class="content-block-login">
+  			<h4>Reg&iacute;strate</h4>
+  			<div class="loginform">
+  				<form id="RegisterForm" method="post">
+  					<div class="form_row">
+  						<div class="form_row_icon"><img src="images/icons/yellow/user.png" alt="" title="" /></div>
+  						<input type="text" name="nombre" value="" class="form_input required" placeholder="nombre y apellido" />
+  					</div>
+  					<div class="form_row">
+  						<div class="form_row_icon"><img src="images/icons/yellow/user.png" alt="" title="" /></div>
+  						<input type="text" name="nickname" value="" class="form_input required js-user-reg" placeholder="nickname" />
+  					</div>
+  					<div class="form_row">
+  						<div class="form_row_icon"><img src="images/icons/yellow/lock.png" alt="" title="" /></div>
+  						<input type="password" name="clave" value="" class="form_input required" placeholder="password" />
+  					</div>
+  					<div class="form_row">
+  						<div class="form_row_icon"><img src="images/icons/yellow/contact.png" alt="" title="" /></div>
+  						<input type="text" name="email" value="" class="form_input required" placeholder="email" />
+  					</div>
+  					<input type="submit" name="submit" class="form_submit" id="submit" value="Registrarse" />
+  				</form>
+  				<p>
+  					Al registrarte est&aacute;s de acuerdo con los <a href="data/terminos.html" onclick="closeModals();">T&eacute;rminos y condiciones</a>
+  					y la <a href="data/privacidad.html" onclick="closeModals();">Pol&iacute;tica de privacidad</a>
+  				</p>
+  			</div>
+  			<div class="close_loginpopup_button"><a href="#" class="close-popup"><img src="images/icons/yellow/menu_close.png" alt="" title="" /></a></div>
+  		</div>
+    </div>
 
-
-  -----
-						<div class="form_row">
-							<div class="form_row_icon"><img src="images/icons/yellow/user.png" alt="" title="" /></div>
-							<input type="text" name="nombre" value="" class="form_input required" placeholder="nombre(s)" />
-						</div>
-						<div class="form_row">
-							<div class="form_row_icon"><img src="images/icons/yellow/user.png" alt="" title="" /></div>
-							<input type="text" name="apellido" value="" class="form_input required" placeholder="apellido(s)" />
-						</div>
-						<div class="form_row">
-							<div class="form_row_icon"><img src="images/icons/yellow/mobile.png" alt="" title="" /></div>
-							<input type="text" name="celular" value="" class="form_input" placeholder="celular" />
-						</div>
-						<div class="form_row">
-							<div class="form_row_icon"><img src="images/icons/yellow/shop.png" alt="" title="" /></div>
-							<select id="banco" name="idbanco" class="form_select"></select>
-						</div>
-						<div class="form_row">
-							<div class="form_row_icon">&nbsp;</div>
-							<input type="text" name="numerocuenta" value="" class="form_input" placeholder="N&uacute;mero de cuenta (Donde recibiras tus pagos)" />
-						</div>
-						<div id="matsreg" class="form_row table-responsive"></div>
-						<input type="hidden" id="cantmatsreg" name="cantmatsreg" value="0">
-						<input type="hidden" id="tipou" name="tipo" value="2">
-						<input type="submit" name="submit" class="form_submit" id="submit" value="Registrarse" />
-					</form>
-					<p>
-						Al registrarte est&aacute;s de acuerdo con los <a href="data/terminosasistentes.html" onclick="closeModals();">T&eacute;rminos y condiciones</a>
-						y la <a href="data/privacidad.html" onclick="closeModals();">Pol&iacute;tica de privacidad</a>
-					</p>
-				</div>
-				<div class="close_loginpopup_button"><a href="#" class="close-popup"><img src="images/icons/white/menu_close.png" alt="" title="" /></a></div>
-			</div>
-		</div>
 		<!-- Login Popup -->
 		<div class="popup popup-forgot">
 			<div class="content-block-login">
-			  	<h4>Olvidaste tu clave?</h4>
+		  	<h4>Olvidaste tu clave?</h4>
 				<div class="loginform">
 					<form id="ForgotForm" method="post">
 						<div class="form_row">
@@ -262,18 +209,50 @@
 						<p>Revisa tu correo y sigue las instrucciones para recuperar tu clave.</p>
 					</div>
 				</div>
-			  	<div class="close_loginpopup_button"><a href="#" class="close-popup"><img src="images/icons/white/menu_close.png" alt="" title="" /></a></div>
+		  	<div class="close_loginpopup_button"><a href="#" class="close-popup"><img src="images/icons/white/menu_close.png" alt="" title="" /></a></div>
 			</div>
 		</div>
 
-<script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
-<script type="text/javascript" src="js/jquery-ui.min.js"></script>
-<script src="js/jquery.validate.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="js/framework7.js"></script>
-<script type="text/javascript" src="js/my-app.js"></script>
-<script src="js/login.js"></script>
-<script type="text/javascript" src="js/jquery.swipebox.js"></script>
-<script type="text/javascript" src="js/email.js"></script>
-<script type="text/javascript" src="js/todocel.js"></script>
+    <script src="js/handlebars.min.js"></script>
+    <script src="js/jquery-1.10.1.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/framework7.js"></script>
+    <script src="js/my-app.js"></script>
+    <script src="js/jquery.swipebox.js"></script>
+    <script src="js/email.js"></script>
+    <script src="js/todocel.js"></script>
+
+    <script id="shopProductItem" type="text/x-handlebars-template">
+      <div class="shop_thumb"><a href="shop-item.html"><img src="images/shop_thumb1.jpg" alt="" title="" /></a></div>
+      <div class="shop_item_details">
+        <h4><a href="shop-item.html">{{nombre}}</a></h4>
+        <div class="shop_item_price">{{precio}}</div>
+        <form class="js-cart-element-form" method="POST" action="#">
+          <div class="item_qnty_shop">
+            <input type="hidden" class="js-cart-element-id" name="id" value="{{id}}" />
+            <input type="hidden" class="js-cart-element-price" name="price" value="{{precio}}" />
+            <input type="hidden" class="js-cart-element-name" name="name" value="{{nombre}}" />
+            <input type="text" class="js-cart-element-quantity" name="quantity" value="1" class="qntyshop" />
+          </div>
+          <a href="#" data-panel="left" class="js-addtocart" class="open-panel">Agregar al carrito</a>
+          <a href="#" data-popup=".popup-social" class="open-popup shopfav"><img src="images/icons/yellow/love.png" alt="" title="" /></a>
+        </form>
+      </div>
+    </script>
+    <script id="cartProductItem" type="text/x-handlebars-template">
+      <div class="cart_item">
+        <div class="item_title"><span>{{number}}</span> {{name}}</div>
+        <div class="item_price">{{price}}</div>
+        <div class="item_thumb"><a href="shop-item.html" class="close-panel"><img src="images/shop_thumb3.jpg" alt="" title="" /></a></div>
+        <div class="item_qnty">
+          <label>Cantidad</label>
+          <input type="text" name="quantity-{{number}}" value="{{quantity}}" class="qnty" />
+        </div>
+        <a href="#" class="item_delete js-cart-remove-item" data-id="{{id}}">
+          <img src="images/icons/yellow/trash.png" alt="" title="" />
+        </a>
+      </div>
+    </script>
   </body>
 </html>
