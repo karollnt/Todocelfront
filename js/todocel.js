@@ -132,7 +132,30 @@ todocel.cartHandler = (function () {
   var emptyCart = function () {
     cartData = {items: []};
     storage.removeItem('todocelCart');
-  }
+  };
+
+  var renderCartItem = function (item) {
+    var html = '';
+    if (product) {
+      var source = $("#cartProductItem").html();
+      template = Handlebars.compile(source);
+      html = template(product);
+    }
+    return html;
+  };
+
+  var renderCart = function () {
+    var html = '', total = 0;
+    var dataSize = cartData.items.length;
+    for (var i = 0; i < dataSize; i++) {
+      html += renderCartItem(cartData.items[i]);
+      total += cartData.items[i].price;
+    }
+    $('.js-cart-items').html(html);
+    $('.js-cart-subtotal').html(total*0.84);
+    $('.js-cart-vat').html(total*0.16);
+    $('.js-cart-total').html(total);
+  };
 
   return {
     init: init

@@ -8,18 +8,18 @@ var mercpago = (function(){
   var init = function(){
     $.ajax({
       type : 'post',
-  		url : waooserver+"/solicitudes/datosPasarela",
-  		dataType: "json",
-  		data : "",
-  		success : function(resp){
+      url : todocel.config.backend+"/solicitudes/datosPasarela",
+      dataType: "json",
+      data : "",
+      success : function(resp){
         Mercadopago.setPublishableKey(resp.pubKey);
         searchPaymentMethods();
         searchIdTypes();
   		},
-  		error: function(e){
-  			alert(e.message);
-  		}
-  	});
+      error: function(e){
+        alert(e.message);
+      }
+    });
   };
   var getPaymentMethods = function(){
     return paymentMethods;
@@ -134,10 +134,10 @@ var mercpagoui = (function(){
   var guardaPago = function(){
     $('.js-nick').val(window.localStorage.getItem("nickname"));
     $.ajax({
-  		type : 'post',
-  		url : waooserver+"/usuarios/recargarTokensMP",
-  		dataType: "json",
-  		data : $('.js-enviarPago').serialize(),
+      type : 'post',
+      url : todocel.config.backend+"/usuarios/recargarTokensMP",
+      dataType: "json",
+      data : $('.js-enviarPago').serialize(),
       success : function(resp) {
         if(resp.error){
           alert(resp.error);
