@@ -18,7 +18,7 @@ var todocel = (function () {
 
 todocel.navLinks = (function () {
   var init = function () {
-    $('.main-nav a').on('click',function (ev) {
+    todocel.config.$document.on('click','.main-nav a',function (ev) {
       var element = ev.currentTarget;
       ev.preventDefault();
       loadPage(element);
@@ -31,7 +31,7 @@ todocel.navLinks = (function () {
     if (url.indexOf('shop') > -1) {
       todocel.productos.listarProductos();
     }
-  }
+  };
 
   return {
     init: init
@@ -39,23 +39,23 @@ todocel.navLinks = (function () {
 })();
 
 todocel.productos = (function () {
-  function listarProductos() {
+  var listarProductos = function () {
     var ajx = $.ajax({
       url: todocel.config.backend+'/productos/listarProductos',
-      method: 'post',
+      type: 'post',
       data: {}
     });
     ajx.done(function (data) {
-      var productos = data.productos;
+      var products = data.productos;
       var html = '';
-      $.each(productos,function (index,producto) {
-        html += renderProduct(producto);
+      $.each(products,function (index,product) {
+        html += renderProduct(product);
       });
       $('.js-shop-items').html(html);
     });
-  }
+  };
 
-  function renderProduct(product) {
+  var renderProduct = function (product) {
     var html = '';
     if (product) {
       var source = $("#shopProductItem").html();
@@ -63,7 +63,7 @@ todocel.productos = (function () {
       html = '<li>'+ template(product) +'</li>';
     }
     return html;
-  }
+  };
 
   return {
     listarProductos: listarProductos
@@ -78,6 +78,7 @@ todocel.cartHandler = (function () {
     var data = storage.getItem('todocelCart');
     if (data) {
       cartData = JSON.parse(data);
+      renderCart();
     }
     todocel.config.$document.on('submit','.js-cart-element-form',addToCart);
     todocel.config.$document.on('click','.js-cart-remove-item',removeFormCart);
@@ -112,7 +113,7 @@ todocel.cartHandler = (function () {
       }
     }
     if(item) removeItem(item);
-  }
+  };
 
   var removeItem = function (item) {
     var dataSize = cartData.items.length;
@@ -152,9 +153,32 @@ todocel.cartHandler = (function () {
       total += cartData.items[i].price;
     }
     $('.js-cart-items').html(html);
-    $('.js-cart-subtotal').html(total*0.84);
-    $('.js-cart-vat').html(total*0.16);
-    $('.js-cart-total').html(total);
+    $('.js-cart-subtotal').html('$'+(Math.round(total*0.84)));
+    $('.js-cart-vat').html('$'+(Math.round(total*0.16)));
+    $('.js-cart-total').html('$'+total);
+  };
+
+  var updateStock = function () {
+    var dataSize = cartData.items.length;
+    if (dataSize > 0) {
+      var ajx = $.ajax({
+        url: todocel.config.backend+'/productos/actualizarStock',
+        type: 'post',
+        data: {cartData: cartData}
+      });
+      ajx.done(function (data) {
+        if (data.responseCode == 1) {
+          emptyCart();
+          window.location.href= 'success.html';
+        }
+        else {
+          alert(data.responseMessage);
+        }
+      })
+      .fail(function (err) {
+        console.log(err);
+      });
+    }
   };
 
   return {
