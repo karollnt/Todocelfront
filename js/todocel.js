@@ -8,6 +8,7 @@ var todocel = (function () {
   var init = function () {
     todocel.navLinks.init();
     todocel.cartHandler.init();
+    todocel.productos.init();
   };
 
   return {
@@ -18,7 +19,7 @@ var todocel = (function () {
 
 todocel.navLinks = (function () {
   var init = function () {
-    todocel.config.$document.on('click','.main-nav a',function (ev) {
+    todocel.config.$document.on('click','.main-nav a, .js-nav-item',function (ev) {
       var element = ev.currentTarget;
       ev.preventDefault();
       loadPage(element);
@@ -39,18 +40,75 @@ todocel.navLinks = (function () {
 })();
 
 todocel.productos = (function () {
+
+  var init = function () {
+    todocel.config.$document
+    .off('click','.js-show-shop-item')
+    .on('click','.js-show-shop-item',abrirDetalleProducto);
+  };
+
+  var abrirDetalleProducto = function (ev) {
+    ev.preventDefault();
+    var element = ev.currentTarget;
+    var url = element.href;
+    mainView.router.loadPage(url+"?"+(Math.floor((Math.random() * 1000) + 1)));
+    verDetalleProducto(element.dataset.id);
+  };
+
+  var verDetalleProducto = function (id) {
+    var ajx = $.ajax({
+      url: todocel.config.backend+'/productos/detallesProducto',
+      type: 'post',
+      dataType: 'json',
+      data: {id: id}
+    });
+    ajx.done(function (resp) {
+      var html = '';
+      if (resp.error) {
+        html = resp.error;
+      }
+      else {
+        html = renderProductDetails(resp);
+      }
+      $('.js-product-detail').html(html);
+    }).fail(function (err) {
+      console.error(err);
+    });
+  };
+
+  var renderProductDetails = function (product) {
+    var html = '';
+    if (product) {
+      var source = $("#shopProductDetails").html();
+      var template = Handlebars.compile(source);
+      html = template(product);
+    }
+    return html;
+  };
+
   var listarProductos = function () {
     var ajx = $.ajax({
       url: todocel.config.backend+'/productos/listarProductos',
       type: 'post',
+      dataType: 'json',
       data: {}
     });
     ajx.done(function (data) {
       var products = data.productos;
       var html = '';
-      $.each(products,function (index,product) {
-        html += renderProduct(product);
-      });
+      if (data.error) {
+        html = data.error;
+      }
+      else {
+        if (products.length) {
+          $.each(products,function (index,product) {
+            html += '<li style="opacity: 1;">' + renderProduct(product) + '</li>';
+          });
+        }
+        else {
+          html = 'no hay productos aun';
+        }
+      }
       $('.js-shop-items').html(html);
     });
   };
@@ -59,13 +117,14 @@ todocel.productos = (function () {
     var html = '';
     if (product) {
       var source = $("#shopProductItem").html();
-      template = Handlebars.compile(source);
-      html = '<li>'+ template(product) +'</li>';
+      var template = Handlebars.compile(source);
+      html = template(product);
     }
     return html;
   };
 
   return {
+    init: init,
     listarProductos: listarProductos
   }
 })();
@@ -82,19 +141,35 @@ todocel.cartHandler = (function () {
     }
     todocel.config.$document.on('submit','.js-cart-element-form',addToCart);
     todocel.config.$document.on('click','.js-cart-remove-item',removeFormCart);
+    todocel.config.$document.on('click','.js-addtocart',triggerSubmit);
+  };
+
+  var triggerSubmit = function (ev) {
+    var elem = ev.currentTarget;
+    var $form = $(elem).parent();
+    $form.trigger('submit');
   };
 
   var addToCart = function (ev) {
     ev.preventDefault();
     var form = ev.currentTarget;
+    var dataSize = cartData.items.length;
+    var exists = false;
     var item = {
       id: form.querySelector('.js-cart-element-id').value,
-      quantity: form.querySelector('.js-cart-element-quantity').value,
+      quantity: form.querySelector('.js-cart-element-quantity').value * 1,
       number: cartData.items.length,
       name: form.querySelector('.js-cart-element-name').value,
       price: form.querySelector('.js-cart-element-price').value
     };
-    addItem(item);
+    for (var i = 0; i < dataSize; i++) {
+      if (cartData.items[i].id == item.id) {
+        cartData.items[i].quantity += item.quantity;
+        exists = true;
+      }
+    }
+    if (exists) saveCart();
+    else addItem(item);
   };
 
   var addItem = function (item) {
@@ -135,7 +210,7 @@ todocel.cartHandler = (function () {
     storage.removeItem('todocelCart');
   };
 
-  var renderCartItem = function (item) {
+  var renderCartItem = function (product) {
     var html = '';
     if (product) {
       var source = $("#cartProductItem").html();

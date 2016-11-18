@@ -226,34 +226,67 @@
     <script src="js/mercpago.js"></script>
 
     <script id="shopProductItem" type="text/x-handlebars-template">
-      <div class="shop_thumb"><a href="shop-item.html"><img src="images/shop_thumb1.jpg" alt="" title="" /></a></div>
+      <div class="shop_thumb" style="opacity: 1; left: 0px;">
+        <a href="shop-item.html" class="js-show-shop-item" data-id="{{id}}">
+          <img src="{{archivo}}.{{extension}}" alt="" title="" />
+        </a>
+      </div>
       <div class="shop_item_details">
-        <h4><a href="shop-item.html">{{nombre}}</a></h4>
+        <h4 style="opacity: 1; right: 0px;">
+          <a href="shop-item.html" class="js-show-shop-item"  data-id="{{id}}">{{nombre}}</a>
+        </h4>
         <div class="shop_item_price">{{precio}}</div>
-        <form class="js-cart-element-form" method="POST" action="#">
-          <div class="item_qnty_shop">
+        <div class="item_qnty_shop">
+          <form class="js-cart-element-form" method="POST" action="#">
             <input type="hidden" class="js-cart-element-id" name="id" value="{{id}}" />
             <input type="hidden" class="js-cart-element-price" name="price" value="{{precio}}" />
             <input type="hidden" class="js-cart-element-name" name="name" value="{{nombre}}" />
-            <input type="text" class="js-cart-element-quantity" name="quantity" value="1" class="qntyshop" />
-          </div>
-          <a href="#" data-panel="left" class="js-addtocart" class="open-panel">Agregar al carrito</a>
-          <a href="#" data-popup=".popup-social" class="open-popup shopfav"><img src="images/icons/yellow/love.png" alt="" title="" /></a>
-        </form>
+            <input type="text" class="qntyshop js-cart-element-quantity" name="quantity" value="1" />
+          </form>
+        </div>
+        <a href="#" data-panel="left" id="addtocart" class="js-addtocart" class="open-panel">Agregar al carrito</a>
+        <a href="#" data-popup=".popup-social" class="open-popup shopfav"><img src="images/icons/yellow/love.png" alt="" title="" /></a>
       </div>
     </script>
     <script id="cartProductItem" type="text/x-handlebars-template">
       <div class="cart_item">
         <div class="item_title"><span>{{number}}</span> {{name}}</div>
         <div class="item_price">{{price}}</div>
-        <div class="item_thumb"><a href="shop-item.html" class="close-panel"><img src="images/shop_thumb3.jpg" alt="" title="" /></a></div>
+        <div class="item_thumb">
+          <a href="shop-item.html" class="close-panel js-show-shop-item" data-id="{{id}}">
+            <img src="{{archivo}}.{{extension}}" alt="" title="" /></a>
+          </div>
         <div class="item_qnty">
           <label>Cantidad</label>
-          <input type="text" name="quantity-{{number}}" value="{{quantity}}" class="qnty" />
+          <input type="number" name="quantity-{{number}}" value="{{quantity}}" class="qnty" />
         </div>
         <a href="#" class="item_delete js-cart-remove-item" data-id="{{id}}">
           <img src="images/icons/yellow/trash.png" alt="" title="" />
         </a>
+      </div>
+    </script>
+    <script id="shopProductDetails" type="text/x-handlebars-template">
+      <div class="shop_item">
+        <div class="shop_thumb" style="left: 0px; opacity: 1;">
+          <a rel="gallery-3" href="{{archivo}}.{{extension}}" title="{{nombre}}" class="swipebox"><img src="images/shop_thumb2.jpg" alt="" title="" /></a>
+          <div class="shop_item_price" style="right: 10px; opacity: 1;">{{precio}}</div>
+          <a href="#" data-popup=".popup-social" class="open-popup shopfav" style="width: 10%; opacity: 1;"><img src="images/icons/yellow/love.png" alt="" title="" /></a>
+          <a href="#" data-popup=".popup-social" class="open-popup shopfriend" style="width: 10%; opacity: 1;"><img src="images/icons/yellow/users.png" alt="" title="" /></a>
+        </div>
+        <div class="shop_item_details">
+          <h4>Descripcion del producto</h4>
+          <p>{{descripcion}}</p>
+          <h4>Seleccione cantidad</h4>
+          <div class="item_qnty_shopitem">
+            <form class="js-cart-element-form" method="POST" action="#">
+              <input type="hidden" class="js-cart-element-id" name="id" value="{{id}}" />
+              <input type="hidden" class="js-cart-element-price" name="price" value="{{precio}}" />
+              <input type="hidden" class="js-cart-element-name" name="name" value="{{nombre}}" />
+              <input type="number" class="js-cart-element-quantity" name="quantity" value="1" />
+            </form>
+          </div>
+          <a href="#" data-panel="left" id="addtocart" class="js-addtocart" class="open-panel">Agregar al carrito</a>
+        </div>
       </div>
     </script>
   </body>
