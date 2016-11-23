@@ -11,8 +11,9 @@
     <link rel="stylesheet" href="css/framework7.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="css/yellow.css">
-    <link type="text/css" rel="stylesheet" href="css/swipebox.css" />
-    <link type="text/css" rel="stylesheet" href="css/animations.css" />
+    <link rel="stylesheet" href="css/swipebox.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+    <link rel="stylesheet" href="css/custom.css" />
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,900' rel='stylesheet' type='text/css'>
   </head>
   <body id="mobile_wrap">
@@ -20,55 +21,10 @@
     <div class="panel-overlay"></div>
     <div class="panel panel-left panel-reveal">
       <div class="cartcontainer">
-        <h2>CART <span>(3 ITEMS)</span></h2>
+        <h2>Carrito <span class="js-cart-quantity">(0 productos)</span></h2>
         <a href="#" class="closecart close-panel"><img src="images/icons/white/menu_close.png" alt="" title="" /></a>
 
-        <div class="js-cart-items">
-          <div class="cart_item" id="cartitem1">
-            <div class="item_title"><span>01.</span> Bicycle Pedal Driven</div>
-            <div class="item_price">$100</div>
-          	<div class="item_thumb"><a href="shop-item.html" class="close-panel"><img src="images/shop_thumb1.jpg" alt="" title="" /></a></div>
-            <div class="item_qnty">
-              <form id="myform" method="POST" action="#">
-                <label>QUANTITY</label>
-                <input type="button" value="-" class="qntyminus" field="quantity" />
-                <input type="text" name="quantity" value="1" class="qnty" />
-                <input type="button" value="+" class="qntyplus" field="quantity" />
-              </form>
-            </div>
-            <a href="#" class="item_delete" id="cartitem1"><img src="images/icons/yellow/trash.png" alt="" title="" /></a>
-          </div>
-
-          <div class="cart_item" id="cartitem2">
-            <div class="item_title"><span>02.</span> Yellow Car </div>
-            <div class="item_price">$1200</div>
-          	<div class="item_thumb"><a href="shop-item.html" class="close-panel"><img src="images/shop_thumb2.jpg" alt="" title="" /></a></div>
-            <div class="item_qnty">
-              <form id="myform" method="POST" action="#">
-                <label>QUANTITY</label>
-                <input type="button" value="-" class="qntyminus" field="quantity2" />
-                <input type="text" name="quantity2" value="1" class="qnty" />
-                <input type="button" value="+" class="qntyplus" field="quantity2" />
-              </form>
-            </div>
-            <a href="#" class="item_delete" id="cartitem2"><img src="images/icons/yellow/trash.png" alt="" title="" /></a>
-          </div>
-
-          <div class="cart_item" id="cartitem3">
-            <div class="item_title"><span>03.</span> Summer T-Shirt</div>
-            <div class="item_price">$20</div>
-          	<div class="item_thumb"><a href="shop-item.html" class="close-panel"><img src="images/shop_thumb3.jpg" alt="" title="" /></a></div>
-            <div class="item_qnty">
-              <form id="myform" method="POST" action="#">
-                <label>QUANTITY</label>
-                <input type="button" value="-" class="qntyminus" field="quantity3" />
-                <input type="text" name="quantity3" value="1" class="qnty" />
-                <input type="button" value="+" class="qntyplus" field="quantity3" />
-              </form>
-            </div>
-            <a href="#" class="item_delete" id="cartitem3"><img src="images/icons/yellow/trash.png" alt="" title="" /></a>
-          </div>
-        </div>
+        <div class="js-cart-items"></div>
 
         <div class="carttotal">
           <div class="carttotal_row">
@@ -81,7 +37,7 @@
             <div class="carttotal_left">Total</div> <div class="carttotal_right js-cart-total">$ 1,518.00</div>
           </div>
         </div>
-        <a href="pasarela.html" class="checkout close-panel">Ir a checkout</a>
+        <a href="pasarela.html" class="checkout close-panel js-nav-item">Ir a checkout</a>
       </div>
     </div>
 
@@ -241,6 +197,7 @@
             <input type="hidden" class="js-cart-element-id" name="id" value="{{id}}" />
             <input type="hidden" class="js-cart-element-price" name="price" value="{{precio}}" />
             <input type="hidden" class="js-cart-element-name" name="name" value="{{nombre}}" />
+            <input type="hidden" class="js-cart-element-image" name="name" value="{{archivo}}.{{extension}}" />
             <input type="text" class="qntyshop js-cart-element-quantity" name="quantity" value="1" />
           </form>
         </div>
@@ -254,7 +211,7 @@
         <div class="item_price">{{price}}</div>
         <div class="item_thumb">
           <a href="shop-item.html" class="close-panel js-show-shop-item" data-id="{{id}}">
-            <img src="{{archivo}}.{{extension}}" alt="" title="" /></a>
+            <img src="{{image}}" alt="" title="" /></a>
           </div>
         <div class="item_qnty">
           <label>Cantidad</label>

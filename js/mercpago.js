@@ -15,7 +15,7 @@ var mercpago = (function(){
         Mercadopago.setPublishableKey(resp.pubKey);
         searchPaymentMethods();
         searchIdTypes();
-  		},
+      },
       error: function(e){
         alert(e.message);
       }
@@ -64,7 +64,7 @@ var mercpagoui = (function(){
   };
   var selectTipoId = function(){
     var idTypes = mercpago.getIdTypes();
-    var html = "<select id='docType' name='docType' data-checkout='docType' class='js-tipoId form-control'>";
+    var html = "<select id='docType' name='docType' data-checkout='docType' class='js-tipoId form_select'>";
     $.each(idTypes,function (ixd,obj) {
       html += "<option value='"+obj.id+"'>"+obj.name+"</option>";
     });
@@ -73,7 +73,7 @@ var mercpagoui = (function(){
   };
   var selectTipoPago = function(){
     var paymentMethods = mercpago.getPaymentMethods();
-    var html = "<select class='js-miTipoPago form-control' name='paymentMethodId'>";
+    var html = "<select class='js-miTipoPago form_select' name='paymentMethodId'>";
     $.each(paymentMethods,function(ixd,obj){
       if(obj.status=='active' && obj.payment_type_id=='credit_card'){
         html +=
@@ -165,10 +165,10 @@ var mercpagoui = (function(){
         adivinarTipoTarjeta();
       },200));
     });
-    $('.js-enviaPago').off('click').on('click',function(){
+    /*$('.js-enviaPago').off('click').on('click',function(){
       $(this).button('loading');
       enviarPago();
-    });
+    });*/
   };
   return{
     selectTipoId: selectTipoId,
