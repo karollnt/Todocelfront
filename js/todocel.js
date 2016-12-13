@@ -287,6 +287,26 @@ todocel.cartHandler = (function () {
     }
   };
 
+  var verifyCartStock = function () {
+    var ajx = $.ajax({
+      url: todocel.config.backend+'/productos/verificarStockCart',
+      type: 'post',
+      dataType: 'json',
+      data: {cartData: JSON.stringify(cartData)}
+    });
+    ajx.done(function (data) {
+      if (data.responseCode == 1) {
+        todocel.payments.processPayment();
+      }
+      else {
+        alert(data.responseMessage);
+      }
+    })
+    .fail(function (err) {
+      console.log(err);
+    });
+  };
+
   var updateStock = function () {
     var dataSize = cartData.items.length;
     if (dataSize > 0) {
@@ -323,6 +343,7 @@ todocel.cartHandler = (function () {
   return {
     init: init,
     getTotal: getTotal,
+    verifyCartStock: verifyCartStock,
     updateStock: updateStock
   };
 })();
@@ -344,6 +365,10 @@ todocel.payments = (function () {
 
   var sendPayment = function () {
     var $data = document.querySelector('.js-enviarPago');
+    todocel.cartHandler.verifyCartStock();
+  };
+
+  var processPayment = function () {
     Mercadopago.createToken($data,function (st,resp) {
       if(st!=200 && st!=201) {
         alert('No es posible llevar a cabo el proceso');
@@ -356,7 +381,8 @@ todocel.payments = (function () {
 
   return {
     init: init,
-    sendPayment: sendPayment
+    sendPayment: sendPayment,
+    processPayment: processPayment
   };
 })();
 
