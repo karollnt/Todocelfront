@@ -9,6 +9,8 @@ var todocel = (function () {
     todocel.navLinks.init();
     todocel.cartHandler.init();
     todocel.productos.init();
+
+    todocel.config.$document.on('click','.js-open-cart',todocel.cartHandler.init);
   };
 
   return {

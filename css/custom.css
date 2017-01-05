@@ -2,3 +2,16 @@
 .button {
   width: 100%;
 }
+
+.shop_header_title h2 {
+  width: 80%;
+}
+.product-list-cart-link {
+  background-color: inherit !important;
+  padding: 0 !important;
+  width: auto !important;
+}
+.product-list-cart-img {
+  max-height: 32px;
+  max-width: 32px;
+}
