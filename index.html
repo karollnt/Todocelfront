@@ -75,12 +75,12 @@
     					  <h1>Cell House</h1>
                 <span style="color: #FFF;">Samsung-Huawei-Hyundai-Apple</span>
               </div>
-               <nav class="main-nav">
+               <nav class="main-nav js-main-nav">
                 <ul>
-                  <li><a href="#" data-popup=".popup-login" class="open-popup"><img src="images/icons/yellow/user.png" alt="" title="" /><span>LOGIN</span></a></li>
-                  <li><a href="shop.html"><img src="images/icons/yellow/shop.png" alt="" title="" /><span>TIENDA</span></a></li>
-                  <li><a href="#" data-panel="left" class="open-panel"><img src="images/icons/yellow/cart.png" alt="" title="" /><span>CARRITO</span><div class="cartitems">3</div></a></li>
-                  <li><a href="contact.html"><img src="images/icons/yellow/contact.png" alt="" title="" /><span>CONTACTENOS</span></a></li>
+                  <li><a href="#" data-popup=".popup-login" class="open-popup js-login-link"><img src="images/icons/yellow/user.png" alt="" title="" /><span>LOGIN</span></a></li>
+                  <li><a href="#" data-link="shop.html"><img src="images/icons/yellow/shop.png" alt="" title="" /><span>TIENDA</span></a></li>
+                  <li><a href="#" data-panel="left" class="open-panel"><img src="images/icons/yellow/cart.png" alt="" title="" /><span>CARRITO</span><div class="cartitems js-cart-items-counter">0</div></a></li>
+                  <li><a href="#"data-link="contact.html"><img src="images/icons/yellow/contact.png" alt="" title="" /><span>CONTACTENOS</span></a></li>
                 </ul>
               </nav>
             </div>
@@ -94,7 +94,7 @@
 			<div class="content-block-login">
 			<h4>Inicia sesi&oacute;n</h4>
 				<div class="loginform">
-					<form id="LoginForm" method="post">
+					<form class="js-login-form" method="post">
 						<div class="form_row">
 							<div class="form_row_icon"><img src="images/icons/yellow/user.png" alt="" title="" /></div>
 							<input type="text" name="nickname" value="" class="form_input required js-usuario" placeholder="nickname" />
