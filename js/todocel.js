@@ -2,7 +2,8 @@
 var todocel = (function () {
   var config = {
     $document: $(document),
-    backend: 'http://localhost/TodoCel'
+    backend: 'http://localhost/TodoCel',
+    user: window.localStorage.getItem('nickname')
   }
 
   var init = function () {
@@ -10,9 +11,11 @@ var todocel = (function () {
     todocel.cartHandler.init();
     todocel.productos.init();
     todocel.users.init();
+    todocel.handlebarsHelpers.init();
     todocel.config.$document
       .on('click','.js-open-cart',todocel.cartHandler.init)
-      .on('submit','.js-login-form',todocel.users.login);
+      .on('submit','.js-login-form',todocel.users.login)
+      .on('submit','.js-register-form',todocel.users.register);
   };
 
   return {
@@ -60,11 +63,22 @@ todocel.utils = (function () {
     return JSON.stringify( obj );
   };
 
+  var formatMoney = function(n, c, d, t){
+    var c = isNaN(c = Math.abs(c)) ? 2 : c,
+        d = d == undefined ? '.' : d,
+        t = t == undefined ? ',' : t,
+        s = n < 0 ? '-' : '',
+        i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
+        j = (j = i.length) > 3 ? j % 3 : 0;
+    return s + (j ? i.substr(0, j) + t : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, '$1' + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : '');
+  };
+
   return {
     fillMonthSelect: fillMonthSelect,
     fillYearSelect: fillYearSelect,
     validateEmail: validateEmail,
-    formToJSONString: formToJSONString
+    formToJSONString: formToJSONString,
+    formatMoney: formatMoney
   };
 })();
 
@@ -414,6 +428,51 @@ todocel.payments = (function () {
     });
   };
 
+  var listOrders = function () {
+    if (todocel.users.verifyLoggedIn()) {
+      var $orderContainer = $('.js-order-container');
+      $orderContainer.html('');
+      var ajx = $.ajax({
+        url: todocel.config.backend+'/ventas/ordenesUsuario',
+        type: 'post',
+        dataType: 'json',
+        data: {nickname: todocel.config.user}
+      });
+      ajx.done(function (data) {
+        var html = '';
+        for (var i = 0; i < data.orders.length; i++) {
+          var source = $('#orderListElement').html();
+          var template = Handlebars.compile(source);
+          html += template(data.orders[i]);
+        }
+        $orderContainer.html('<ul>'+html+'</ul>');
+      });
+    }
+  };
+
+  var orderDetail = function (ev) {
+    ev.preventDefault();
+    var element = ev.currentTarget;
+    var orderId = element.dataset.id;
+    var $orderContainer = $('.js-order-container');
+    $orderContainer.html('');
+    var ajx = $.ajax({
+      url: todocel.config.backend+'/ventas/detalleOrden',
+      type: 'post',
+      dataType: 'json',
+      data: {id: orderId}
+    });
+    ajx.done(function (data) {
+      var html = '';
+      for (var i = 0; i < data.details.length; i++) {
+        var source = $('#orderDetail').html();
+        var template = Handlebars.compile(source);
+        html += template(data.details[i]);
+      }
+      $orderContainer.html(html);
+    });
+  };
+
   return {
     init: init,
     sendPayment: sendPayment,
@@ -453,6 +512,7 @@ todocel.users = (function () {
         if (data.msg == 'ok') {
           myApp.closeModal('.popup-login');
           isLoggedIn = true;
+          todocel.config.user = window.localStorage.getItem('nickname');
           window.localStorage.setItem('nickname',jsonForm.nickname);
           changeIcons();
         }
@@ -464,6 +524,7 @@ todocel.users = (function () {
     ev.preventDefault();
     isLoggedIn = false;
     window.localStorage.removeItem('nickname');
+    todocel.config.user = null;
     myApp.popup('.popup-login');
     changeIcons();
   };
@@ -481,10 +542,50 @@ todocel.users = (function () {
     }
   };
 
+  var register = function (ev) {
+    ev.preventDefault();
+    var form = ev.target;
+    var jsonForm = todocel.utils.formToJSONString(form);
+    jsonForm = JSON.parse(jsonForm);
+    if (jsonForm.nickname != '' && jsonForm.email != '') {
+      jsonForm.clave = md5(jsonForm.clave);
+      var ajx = $.ajax({
+        url: todocel.config.backend+'/usuarios/crearUsuario',
+        type: 'post',
+        dataType: 'json',
+        data: jsonForm
+      });
+      ajx.done(function (data) {
+        alert(data.msg);
+        form.reset();
+        location.href = 'index.html';
+      });
+    }
+  };
+
   return {
     init: init,
     verifyLoggedIn: verifyLoggedIn,
     login: login
+  };
+})();
+
+var todocel.handlebarsHelpers = (function () {
+  var init = function () {
+    Handlebars.registerHelper('math', function(lvalue, operator, rvalue, options) {
+      lvalue = parseFloat(lvalue);
+      rvalue = parseFloat(rvalue);
+      return {
+        '+': lvalue + rvalue,
+        '-': lvalue - rvalue,
+        '*': lvalue * rvalue,
+        '/': lvalue / rvalue,
+        '%': lvalue % rvalue
+      }[operator];
+    });
+  };
+  return {
+    init: init
   };
 })();
 

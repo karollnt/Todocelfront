@@ -120,14 +120,14 @@
       <div id="fregistro" class="content-block-login">
   			<h4>Reg&iacute;strate</h4>
   			<div class="loginform">
-  				<form id="RegisterForm" method="post">
+  				<form class="js-register-form" method="post">
   					<div class="form_row">
   						<div class="form_row_icon"><img src="images/icons/yellow/user.png" alt="" title="" /></div>
   						<input type="text" name="nombre" value="" class="form_input required" placeholder="nombre y apellido" />
   					</div>
   					<div class="form_row">
   						<div class="form_row_icon"><img src="images/icons/yellow/user.png" alt="" title="" /></div>
-  						<input type="text" name="nickname" value="" class="form_input required js-user-reg" placeholder="nickname" />
+  						<input type="text" name="nickname" value="" class="form_input required" placeholder="nickname" />
   					</div>
   					<div class="form_row">
   						<div class="form_row_icon"><img src="images/icons/yellow/lock.png" alt="" title="" /></div>
@@ -244,6 +244,46 @@
           </div>
           <a href="#" data-panel="left" id="addtocart" class="js-addtocart" class="open-panel">Agregar al carrito</a>
         </div>
+      </div>
+    </script>
+    <script id="orderListElement" type="text/x-handlebars-template">
+      <li>
+        <a href="#" data-id="{{id}}" class="js-view-order-detail">
+          <h4>Orden {{id}}</h4>
+          <p>
+            Fecha: {{fecha}}<br>
+            Valor: {{valor}}
+          </p>
+        </a>
+      </li>
+    </script>
+    <script id="orderDetail" type="text/x-handlebars-template">
+      <h4>Orden {{idVenta}}</h4>
+      <p>
+        Fecha: {{fecha}}<br>
+        Valor: {{valor}}
+      </p>
+      <div>
+        <table>
+          <tr>
+            <th>Descripcion</th>
+            <th>Cantidad</th>
+            <th>Valor unitario</th>
+            <th>Valor total</th>
+          </tr>
+          {{#each productos}}
+            <tr>
+              <td>{{producto.nombre}}</td>
+              <td>{{producto.cantidad}}</td>
+              <td>{{producto.valor}}</td>
+              <td>{{math producto.valor '*' producto.cantidad}}</td>
+            </tr>
+          {{/each}}
+          <tr>
+            <td colspan="3">Total</td>
+            <td>{{valor}}</td>
+          </tr>
+        </table>
       </div>
     </script>
   </body>
