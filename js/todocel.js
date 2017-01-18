@@ -102,7 +102,11 @@ todocel.navLinks = (function () {
           todocel.productos.listarProductos();
         }
         if (url.indexOf('index') > -1) {
-          todocel.cartHandler.init();
+          setTimeout(function () {
+            todocel.cartHandler.init();
+            todocel.navLinks.init();
+            todocel.users.init();
+          },500);
         }
         if (url.indexOf('pasarela') > -1) {
           setTimeout(function(){
@@ -224,23 +228,22 @@ todocel.cartHandler = (function () {
       renderCart();
       $('.js-cart-items-counter').html(cartData.items.length);
     }
-    todocel.config.$document.off('submit','.js-cart-element-form');
-    todocel.config.$document.on('submit','.js-cart-element-form',addToCart);
+    todocel.config.$document.off('submit','.js-cart-element-form').on('submit','.js-cart-element-form',triggerSubmit);
     todocel.config.$document.on('click','.js-cart-remove-item',removeFormCart);
     todocel.config.$document.off('click','.js-addtocart');
-    todocel.config.$document.on('click','.js-addtocart',triggerSubmit);
+    todocel.config.$document.on('click','.js-addtocart',addToCart);
     todocel.config.$document.on('submit','.js-enviarPago',verifyCartStock);
   };
 
   var triggerSubmit = function (ev) {
-    var elem = ev.currentTarget;
-    var $form = $(elem).parent().find('.js-cart-element-form');
-    $form.trigger('submit');
+    ev.preventDefault();
+    addToCart(ev);
   };
 
   var addToCart = function (ev) {
     ev.preventDefault();
-    var form = ev.currentTarget;
+    var elem = ev.currentTarget;
+    var form = $(elem).parent().find('.js-cart-element-form')[0];
     var dataSize = cartData.items.length;
     var exists = false;
     var item = {
@@ -507,7 +510,6 @@ todocel.payments = (function () {
 
 todocel.users = (function () {
   var isLoggedIn = false;
-  var $loginElem = $('.js-login-link');
   var init = function () {
     isLoggedIn = window.localStorage.getItem('nickname')!=null;
     if (!isLoggedIn) {
@@ -555,6 +557,7 @@ todocel.users = (function () {
   };
 
   var changeIcons = function () {
+    var $loginElem = $('.js-login-link');
     if (isLoggedIn) {
       $loginElem.find('img').prop('src','images/icons/yellow/logout.png');
       $loginElem.find('span').html('Logout');
@@ -595,9 +598,9 @@ todocel.users = (function () {
   };
 })();
 
-var todocel.handlebarsHelpers = (function () {
+todocel.handlebarsHelpers = (function () {
   var init = function () {
-    Handlebars.registerHelper('math', function(lvalue, operator, rvalue, options) {
+    Handlebars.registerHelper('maths', function(lvalue, operator, rvalue, options) {
       lvalue = parseFloat(lvalue);
       rvalue = parseFloat(rvalue);
       return {

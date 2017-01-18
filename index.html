@@ -184,7 +184,7 @@
     <script id="shopProductItem" type="text/x-handlebars-template">
       <div class="shop_thumb" style="opacity: 1; left: 0px;">
         <a href="shop-item.html" class="js-show-shop-item" data-id="{{id}}">
-          <img src="{{archivo}}.{{extension}}" alt="" title="" />
+          <img src="{{archivo}}" alt="" title="" />
         </a>
       </div>
       <div class="shop_item_details">
@@ -197,7 +197,7 @@
             <input type="hidden" class="js-cart-element-id" name="id" value="{{id}}" />
             <input type="hidden" class="js-cart-element-price" name="price" value="{{precio}}" />
             <input type="hidden" class="js-cart-element-name" name="name" value="{{nombre}}" />
-            <input type="hidden" class="js-cart-element-image" name="name" value="{{archivo}}.{{extension}}" />
+            <input type="hidden" class="js-cart-element-image" name="name" value="{{archivo}}" />
             <input type="text" class="qntyshop js-cart-element-quantity" name="quantity" value="1" />
           </form>
         </div>
@@ -225,7 +225,7 @@
     <script id="shopProductDetails" type="text/x-handlebars-template">
       <div class="shop_item">
         <div class="shop_thumb" style="left: 0px; opacity: 1;">
-          <a rel="gallery-3" href="{{archivo}}.{{extension}}" title="{{nombre}}" class="swipebox"><img src="images/shop_thumb2.jpg" alt="" title="" /></a>
+          <a rel="gallery-3" href="{{archivo}}" title="{{nombre}}" class="swipebox"><img src="{{archivo}}" alt="" title="" /></a>
           <div class="shop_item_price" style="right: 10px; opacity: 1;">{{precio}}</div>
           <a href="#" data-popup=".popup-social" class="open-popup shopfav" style="width: 10%; opacity: 1;"><img src="images/icons/yellow/love.png" alt="" title="" /></a>
           <a href="#" data-popup=".popup-social" class="open-popup shopfriend" style="width: 10%; opacity: 1;"><img src="images/icons/yellow/users.png" alt="" title="" /></a>
@@ -276,7 +276,7 @@
               <td>{{producto.nombre}}</td>
               <td>{{producto.cantidad}}</td>
               <td>{{producto.valor}}</td>
-              <td>{{math producto.valor '*' producto.cantidad}}</td>
+              <td>{{js "producto.valor * producto.cantidad"}}</td>
             </tr>
           {{/each}}
           <tr>
