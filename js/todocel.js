@@ -14,6 +14,7 @@ var todocel = (function () {
     todocel.handlebarsHelpers.init();
     todocel.config.$document
       .on('click','.js-open-cart',todocel.cartHandler.init)
+      .on('click','.js-view-order-detail',todocel.payments.orderDetail)
       .on('submit','.js-login-form',todocel.users.login)
       .on('submit','.js-register-form',todocel.users.register);
   };
@@ -99,7 +100,7 @@ todocel.navLinks = (function () {
       if (url) {
         mainView.router.loadPage(url+"?"+(Math.floor((Math.random() * 1000) + 1)));
         if (url.indexOf('shop') > -1) {
-          todocel.productos.listarProductos();
+          todocel.productos.listProducts();
         }
         if (url.indexOf('index') > -1) {
           setTimeout(function () {
@@ -114,6 +115,11 @@ todocel.navLinks = (function () {
             todocel.utils.fillMonthSelect('.js-expirationMonth');
             todocel.utils.fillYearSelect('.js-expirationYear');
             todocel.payments.init();
+          },1000);
+        }
+        if (url.indexOf('history') > -1) {
+          setTimeout(function(){
+            todocel.payments.listOrders();
           },1000);
         }
       }
@@ -132,10 +138,10 @@ todocel.productos = (function () {
   var init = function () {
     todocel.config.$document
     .off('click','.js-show-shop-item')
-    .on('click','.js-show-shop-item',abrirDetalleProducto);
+    .on('click','.js-show-shop-item',openProductDetail);
   };
 
-  var abrirDetalleProducto = function (ev) {
+  var openProductDetail = function (ev) {
     ev.preventDefault();
     var element = ev.currentTarget;
     var url = element.href;
@@ -174,7 +180,7 @@ todocel.productos = (function () {
     return html;
   };
 
-  var listarProductos = function () {
+  var listProducts = function () {
     var ajx = $.ajax({
       url: todocel.config.backend+'/productos/listarProductos',
       type: 'post',
@@ -213,7 +219,7 @@ todocel.productos = (function () {
 
   return {
     init: init,
-    listarProductos: listarProductos
+    listProducts: listProducts
   };
 })();
 
@@ -435,7 +441,7 @@ todocel.payments = (function () {
   var renderPrices = function () {
     var total = todocel.cartHandler.getTotal();
     $('.js-checkout-subtotal').html('$'+(Math.round(total*0.81)));
-    $('.js-checkout-vat').html('$'+(Math.round(total*0.19)));
+    $('.js-checkout-vat').html('$'+(Math.round(total*0.16)));
     $('.js-checkout-total').html('$'+total);
     $('.js-checkout-valor').val(total);
   };
@@ -468,10 +474,11 @@ todocel.payments = (function () {
       });
       ajx.done(function (data) {
         var html = '';
-        for (var i = 0; i < data.orders.length; i++) {
+        var orders = data.msg.orders;
+        for (var i = 0; i < orders.length; i++) {
           var source = $('#orderListElement').html();
           var template = Handlebars.compile(source);
-          html += template(data.orders[i]);
+          html += template(orders[i]);
         }
         $orderContainer.html('<ul>'+html+'</ul>');
       });
@@ -490,21 +497,28 @@ todocel.payments = (function () {
       dataType: 'json',
       data: {id: orderId}
     });
-    ajx.done(function (data) {
+    ajx.done(function (resp) {
       var html = '';
-      for (var i = 0; i < data.details.length; i++) {
-        var source = $('#orderDetail').html();
-        var template = Handlebars.compile(source);
-        html += template(data.details[i]);
+      var source, template;
+      if (resp.status == 200) {
+        html = '';
+        source = $('#orderDetail').html();
+        template = Handlebars.compile(source);
+        html = template(resp.msg);
+        $orderContainer.html(html);
       }
-      $orderContainer.html(html);
+      else {
+        alert(detail);
+      }
     });
   };
 
   return {
     init: init,
     sendPayment: sendPayment,
-    processPayment: processPayment
+    processPayment: processPayment,
+    listOrders: listOrders,
+    orderDetail: orderDetail
   };
 })();
 

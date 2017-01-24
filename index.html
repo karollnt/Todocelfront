@@ -31,7 +31,7 @@
             <div class="carttotal_left">Subtotal</div> <div class="carttotal_right js-cart-subtotal">$ 1,320.00</div>
           </div>
           <div class="carttotal_row">
-            <div class="carttotal_left">IVA (16%)</div> <div class="carttotal_right js-cart-vat">$ 198.00</div>
+            <div class="carttotal_left">IVA (19%)</div> <div class="carttotal_right js-cart-vat">$ 198.00</div>
           </div>
           <div class="carttotal_row_last">
             <div class="carttotal_left">Total</div> <div class="carttotal_right js-cart-total">$ 1,518.00</div>
@@ -77,10 +77,11 @@
               </div>
                <nav class="main-nav js-main-nav">
                 <ul>
-                  <li><a href="#" data-popup=".popup-login" class="open-popup js-login-link"><img src="images/icons/yellow/user.png" alt="" title="" /><span>LOGIN</span></a></li>
-                  <li><a href="#" data-link="shop.html"><img src="images/icons/yellow/shop.png" alt="" title="" /><span>TIENDA</span></a></li>
-                  <li><a href="#" data-panel="left" class="open-panel"><img src="images/icons/yellow/cart.png" alt="" title="" /><span>CARRITO</span><div class="cartitems js-cart-items-counter">0</div></a></li>
-                  <li><a href="#"data-link="contact.html"><img src="images/icons/yellow/contact.png" alt="" title="" /><span>CONTACTENOS</span></a></li>
+                  <li><a href="#" data-popup=".popup-login" class="open-popup js-login-link"><img src="images/icons/yellow/user.png" alt="" title="" /><span>Login</span></a></li>
+                  <li><a href="#" data-link="shop.html"><img src="images/icons/yellow/shop.png" alt="" title="" /><span>Tienda</span></a></li>
+                  <li><a href="#" data-panel="left" class="open-panel"><img src="images/icons/yellow/cart.png" alt="" title="" /><span>Carrito</span><div class="cartitems js-cart-items-counter">0</div></a></li>
+                  <li><a href="#" data-link="history.html"><img src="images/icons/yellow/blog.png" alt="" title="" /><span>Historial</span></a></li>
+                  <li><a href="#" data-link="contact.html"><img src="images/icons/yellow/contact.png" alt="" title="" /><span>Contacto</span></a></li>
                 </ul>
               </nav>
             </div>
@@ -248,23 +249,21 @@
     </script>
     <script id="orderListElement" type="text/x-handlebars-template">
       <li>
-        <a href="#" data-id="{{id}}" class="js-view-order-detail">
-          <h4>Orden {{id}}</h4>
-          <p>
-            Fecha: {{fecha}}<br>
-            Valor: {{valor}}
-          </p>
-        </a>
+        <h4><a href="#" data-id="{{id}}" class="js-view-order-detail">&gt; Orden {{id}}</a></h4>
+        <p>
+          Fecha: {{fecha}}<br>
+          Valor: ${{valor}}
+        </p>
       </li>
     </script>
     <script id="orderDetail" type="text/x-handlebars-template">
       <h4>Orden {{idVenta}}</h4>
       <p>
         Fecha: {{fecha}}<br>
-        Valor: {{valor}}
+        Valor: ${{valor}}
       </p>
       <div>
-        <table>
+        <table class="table table-bordered">
           <tr>
             <th>Descripcion</th>
             <th>Cantidad</th>
@@ -274,16 +273,19 @@
           {{#each productos}}
             <tr>
               <td>{{producto.nombre}}</td>
-              <td>{{producto.cantidad}}</td>
-              <td>{{producto.valor}}</td>
-              <td>{{js "producto.valor * producto.cantidad"}}</td>
+              <td class="text-right">{{producto.cantidad}}</td>
+              <td class="text-right">${{producto.valor}}</td>
+              <td class="text-right">${{producto.total}}</td>
             </tr>
           {{/each}}
           <tr>
             <td colspan="3">Total</td>
-            <td>{{valor}}</td>
+            <td class="text-right">${{valor}}</td>
           </tr>
         </table>
+      </div>
+      <div class="js-main-nav">
+        <a href="#" data-link="history.html">Volver</a>
       </div>
     </script>
   </body>

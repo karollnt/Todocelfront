@@ -15,3 +15,25 @@
   max-height: 32px;
   max-width: 32px;
 }
+.text-right {
+  text-align: right;
+}
+.table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 20px;
+  max-width: 100%;
+  width: 100%;
+}
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+  border-top: 1px solid #ddd;
+  line-height: 1.42857143;
+  padding: 8px;
+  vertical-align: top;
+}
+.table-bordered {
+  border: 1px solid #ddd;
+}
+.table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
+  border: 1px solid #ddd;
+}
