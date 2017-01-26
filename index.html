@@ -20,7 +20,7 @@
     <div class="statusbar-overlay"></div>
     <div class="panel-overlay"></div>
     <div class="panel panel-left panel-reveal">
-      <div class="cartcontainer">
+      <div class="cartcontainer js-main-nav">
         <h2>Carrito <span class="js-cart-quantity">(0 productos)</span></h2>
         <a href="#" class="closecart close-panel"><img src="images/icons/white/menu_close.png" alt="" title="" /></a>
 
@@ -37,7 +37,7 @@
             <div class="carttotal_left">Total</div> <div class="carttotal_right js-cart-total">$ 1,518.00</div>
           </div>
         </div>
-        <a href="pasarela.html" class="checkout close-panel js-nav-item">Ir a checkout</a>
+        <a href="#" data-link="pasarela.html" class="checkout close-panel js-nav-item">Ir a checkout</a>
       </div>
     </div>
 
@@ -199,7 +199,7 @@
             <input type="hidden" class="js-cart-element-price" name="price" value="{{precio}}" />
             <input type="hidden" class="js-cart-element-name" name="name" value="{{nombre}}" />
             <input type="hidden" class="js-cart-element-image" name="name" value="{{archivo}}" />
-            <input type="text" class="qntyshop js-cart-element-quantity" name="quantity" value="1" />
+            <input type="number" class="qntyshop js-cart-element-quantity" name="quantity" value="1" min="1" max="{{cantidad}}" />
           </form>
         </div>
         <a href="#" data-panel="left" id="addtocart" class="js-addtocart" class="open-panel">Agregar al carrito</a>

@@ -15,9 +15,12 @@
                 <div class="form_row_icon"><img src="images/icons/yellow/user.png" alt="" title="" /></div>
                 <input type="text" name="nombres" id="cardholderName" value="" class="form_input required" placeholder="nombre"/>
               </div>
-              <div class="form_row">
+              <div class="form_row row">
                 <div class="form_row_icon"><img src="images/icons/yellow/user.png" alt="" title="" /></div>
-                <input type="text" name="docNumber" data-checkout="docNumber" value="" class="js-numId form_input required" placeholder="Numero identificacion"/>
+                <div class="col-50">
+                  <input type="text" name="docNumber" data-checkout="docNumber" value="" class="js-numId form_input required" placeholder="Numero identificacion"/>
+                </div><!--
+                --><div class="col-40 js-tipoId-td"></div>
               </div>
               <div class="form_row">
                 <div class="form_row_icon"><img src="images/icons/yellow/contact.png" alt="" title="" /></div>
@@ -45,7 +48,10 @@
                   <input type="text" id="securityCode" name="securityCode" data-checkout="securityCode" value="" class="js-securityCode form_input" pattern="[0-9]{3}" placeholder="C&oacute;digo de seguridad de tarjeta (si el tipo de pago es con tarjeta cr&eacute;dito)">
                 </div>
               </div>
-              <div class="form_row js-tipoPago"></div>
+              <div class="col-100 form_row">
+                <div class="form_row_icon"><img src="images/icons/yellow/settings.png" alt="" title="" /></div>
+                <div class="js-tipoPago"></div>
+              </div>
               <div class="row form_row">
                 <div class="col-50">
                   Mes expira <br/>
@@ -68,7 +74,7 @@
               </div>
               <div class="row form_row">
                 <div class="col-50">
-                  IVA (16%)
+                  IVA (19%)
                 </div>
                 <div class="col-50 js-checkout-vat"></div>
               </div>

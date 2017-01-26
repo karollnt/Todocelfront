@@ -236,8 +236,7 @@ todocel.cartHandler = (function () {
     }
     todocel.config.$document.off('submit','.js-cart-element-form').on('submit','.js-cart-element-form',triggerSubmit);
     todocel.config.$document.on('click','.js-cart-remove-item',removeFormCart);
-    todocel.config.$document.off('click','.js-addtocart');
-    todocel.config.$document.on('click','.js-addtocart',addToCart);
+    todocel.config.$document.off('click','.js-addtocart').on('click','.js-addtocart',addToCart);
     todocel.config.$document.on('submit','.js-enviarPago',verifyCartStock);
   };
 
@@ -441,7 +440,7 @@ todocel.payments = (function () {
   var renderPrices = function () {
     var total = todocel.cartHandler.getTotal();
     $('.js-checkout-subtotal').html('$'+(Math.round(total*0.81)));
-    $('.js-checkout-vat').html('$'+(Math.round(total*0.16)));
+    $('.js-checkout-vat').html('$'+(Math.round(total*0.19)));
     $('.js-checkout-total').html('$'+total);
     $('.js-checkout-valor').val(total);
   };
@@ -526,9 +525,16 @@ todocel.users = (function () {
   var isLoggedIn = false;
   var init = function () {
     isLoggedIn = window.localStorage.getItem('nickname')!=null;
-    if (!isLoggedIn) {
-      myApp.popup('.popup-login');
-    }
+    var $loginElem = $('.js-login-link');
+    $loginElem.off('click').on('click',function (ev) {
+      ev.preventDefault();
+      if (isLoggedIn) {
+        logout();
+      }
+      else {
+        myApp.popup('.popup-login');
+      }
+    });
     changeIcons();
   };
 
@@ -553,16 +559,18 @@ todocel.users = (function () {
         if (data.msg == 'ok') {
           myApp.closeModal('.popup-login');
           isLoggedIn = true;
-          todocel.config.user = window.localStorage.getItem('nickname');
           window.localStorage.setItem('nickname',jsonForm.nickname);
-          changeIcons();
+          todocel.config.user = jsonForm.nickname;
+          window.location.href = 'index.html';
+        }
+        else {
+          alert(data.msg);
         }
       });
     }
   };
 
-  var logout = function (ev) {
-    ev.preventDefault();
+  var logout = function () {
     isLoggedIn = false;
     window.localStorage.removeItem('nickname');
     todocel.config.user = null;
@@ -575,12 +583,11 @@ todocel.users = (function () {
     if (isLoggedIn) {
       $loginElem.find('img').prop('src','images/icons/yellow/logout.png');
       $loginElem.find('span').html('Logout');
-      $loginElem.off('click').on('click',logout);
     }
     else {
+      myApp.popup('.popup-login');
       $loginElem.find('img').prop('src','images/icons/yellow/user.png');
       $loginElem.find('span').html('Login');
-      $loginElem.off('click').on('click',init);
     }
   };
 
