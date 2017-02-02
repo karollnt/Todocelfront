@@ -2,7 +2,8 @@
 var todocel = (function () {
   var config = {
     $document: $(document),
-    backend: 'http://localhost/TodoCel',
+    /*backend: '//localhost/TodoCel',*/
+    backend: 'https://todocel.herokuapp.com',
     user: window.localStorage.getItem('nickname')
   }
 
@@ -345,6 +346,11 @@ todocel.cartHandler = (function () {
 
   var verifyCartStock = function (ev) {
     ev.preventDefault();
+    var $btn = $('.js-send-payment');
+    $btn.prop('disabled',true).html('Enviando');
+    var form = ev.target;
+    var jsonForm = todocel.utils.formToJSONString(form);
+    jsonForm = JSON.parse(jsonForm);
     var ajx = $.ajax({
       url: todocel.config.backend+'/productos/verificarStockCart',
       type: 'post',
@@ -353,10 +359,11 @@ todocel.cartHandler = (function () {
     });
     ajx.done(function (data) {
       if (data.responseCode == 1) {
-        todocel.payments.processPayment(ev);
+        todocel.payments.processPayment(jsonForm);
       }
       else {
         alert(data.responseMessage);
+        $btn.prop('disabled',false).html('<i class="fa fa-money" aria-hidden="true"></i> Aceptar');
       }
     })
     .fail(function (err) {
@@ -381,6 +388,7 @@ todocel.cartHandler = (function () {
         else {
           alert(data.responseMessage);
         }
+        $('.js-send-payment').prop('disabled',false).html('<i class="fa fa-money" aria-hidden="true"></i> Aceptar');
       })
       .fail(function (err) {
         console.log(err);
@@ -388,13 +396,9 @@ todocel.cartHandler = (function () {
     }
   };
 
-  var createOrder = function (ev) {
-    ev.preventDefault();
+  var createOrder = function (jsonForm) {
     var dataSize = cartData.items.length;
     if (dataSize > 0) {
-      var form = ev.target;
-      var jsonForm = todocel.utils.formToJSONString(form);
-      jsonForm = JSON.parse(jsonForm);
       jsonForm.detalles = cartData.items;
       var ajx = $.ajax({
         url: todocel.config.backend+'/ventas/registrarVenta',
@@ -445,18 +449,13 @@ todocel.payments = (function () {
     $('.js-checkout-valor').val(total);
   };
 
-  var sendPayment = function () {
-    var $data = document.querySelector('.js-enviarPago');
-    todocel.cartHandler.verifyCartStock();
-  };
-
-  var processPayment = function (ev) {
-    Mercadopago.createToken($data,function (st,resp) {
+  var processPayment = function (form) {
+    Mercadopago.createToken(document.querySelector('.js-enviarPago'), function (st,resp) {
       if(st!=200 && st!=201) {
         alert('No es posible llevar a cabo el proceso');
       }
       else {
-        todocel.cartHandler.createOrder(ev);
+        todocel.cartHandler.createOrder(form);
       }
     });
   };
@@ -514,7 +513,6 @@ todocel.payments = (function () {
 
   return {
     init: init,
-    sendPayment: sendPayment,
     processPayment: processPayment,
     listOrders: listOrders,
     orderDetail: orderDetail
