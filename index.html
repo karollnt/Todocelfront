@@ -30,9 +30,9 @@
           <div class="carttotal_row">
             <div class="carttotal_left">Subtotal</div> <div class="carttotal_right js-cart-subtotal">$ 1,320.00</div>
           </div>
-          <div class="carttotal_row">
+          <!-- <div class="carttotal_row">
             <div class="carttotal_left">IVA (19%)</div> <div class="carttotal_right js-cart-vat">$ 198.00</div>
-          </div>
+          </div> -->
           <div class="carttotal_row_last">
             <div class="carttotal_left">Total</div> <div class="carttotal_right js-cart-total">$ 1,518.00</div>
           </div>
@@ -198,7 +198,7 @@
             <input type="hidden" class="js-cart-element-id" name="id" value="{{id}}" />
             <input type="hidden" class="js-cart-element-price" name="price" value="{{precio}}" />
             <input type="hidden" class="js-cart-element-name" name="name" value="{{nombre}}" />
-            <input type="hidden" class="js-cart-element-image" name="name" value="{{archivo}}" />
+            <input type="hidden" class="js-cart-element-image" name="image" value="{{archivo}}" />
             <input type="number" class="qntyshop js-cart-element-quantity" name="quantity" value="1" min="1" max="{{cantidad}}" />
           </form>
         </div>
@@ -240,6 +240,7 @@
               <input type="hidden" class="js-cart-element-id" name="id" value="{{id}}" />
               <input type="hidden" class="js-cart-element-price" name="price" value="{{precio}}" />
               <input type="hidden" class="js-cart-element-name" name="name" value="{{nombre}}" />
+              <input type="hidden" class="js-cart-element-image" name="image" value="{{archivo}}" />
               <input type="number" class="js-cart-element-quantity" name="quantity" value="1" />
             </form>
           </div>
