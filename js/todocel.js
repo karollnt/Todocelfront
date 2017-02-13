@@ -10,7 +10,7 @@ var todocel = (function () {
   var init = function () {
     todocel.navLinks.init();
     todocel.cartHandler.init();
-    todocel.productos.init();
+    todocel.products.init();
     todocel.users.init();
     todocel.handlebarsHelpers.init();
     todocel.config.$document
@@ -101,7 +101,7 @@ todocel.navLinks = (function () {
       if (url) {
         mainView.router.loadPage(url+"?"+(Math.floor((Math.random() * 1000) + 1)));
         if (url.indexOf('shop') > -1) {
-          todocel.productos.listProducts();
+          todocel.products.listCategories();
         }
         if (url.indexOf('index') > -1) {
           setTimeout(function () {
@@ -135,22 +135,60 @@ todocel.navLinks = (function () {
   };
 })();
 
-todocel.productos = (function () {
+todocel.products = (function () {
   var init = function () {
     todocel.config.$document
     .off('click','.js-show-shop-item')
-    .on('click','.js-show-shop-item',openProductDetail);
+    .on('click','.js-show-shop-item',openProductDetail)
+    .on('click','.js-view-category',listProductsOfCategory);
+  };
+
+  var renderCategory = function (category) {
+    var html = '';
+    if (category) {
+      var source = $('#shopCategoriesItem').html();
+      var template = Handlebars.compile(source);
+      html = template(category);
+    }
+    return html;
+  };
+
+  var listCategories = function () {
+    var ajx = $.ajax({
+      url: todocel.config.backend+'/categorias/listarCategorias',
+      type: 'post',
+      dataType: 'json',
+      data: ''
+    });
+    ajx.done(function (data) {
+      var html = '', containerHtml = '';
+      var $container = $('.js-shop-container');
+      if (data.error) {
+        containerHtml = data.error;
+      }
+      else {
+        var categorias = data.categorias;
+        var source = $('#shopCategoriesList').html();
+        var template = Handlebars.compile(source);
+
+        for (var i = 0; i < categorias.length; i++) {
+          html += renderCategory(categorias[i]);
+        }
+        containerHtml = template({categories: html});
+      }
+      $container.html(containerHtml);
+    });
   };
 
   var openProductDetail = function (ev) {
     ev.preventDefault();
     var element = ev.currentTarget;
     var url = element.href;
-    mainView.router.loadPage(url+"?"+(Math.floor((Math.random() * 1000) + 1)));
-    verDetalleProducto(element.dataset.id);
+    mainView.router.loadPage(url+'?'+(Math.floor((Math.random() * 1000) + 1)));
+    viewProductDetail(element.dataset.id);
   };
 
-  var verDetalleProducto = function (id) {
+  var viewProductDetail = function (id) {
     var ajx = $.ajax({
       url: todocel.config.backend+'/productos/detallesProducto',
       type: 'post',
@@ -171,10 +209,46 @@ todocel.productos = (function () {
     });
   };
 
+  var listProductsOfCategory = function (ev) {
+    ev.preventDefault();
+    var element = ev.currentTarget;
+    var categoryId = element.dataset.id;
+    var $container = $('.js-shop-container');
+
+    $container.html('<img src="images/loader.gif">');
+    var ajx = $.ajax({
+      url: todocel.config.backend+'/productos/listarProductosPorCategoria',
+      type: 'post',
+      dataType: 'json',
+      data: {id: categoryId}
+    });
+    (function (container) {
+      ajx.done(function (data) {
+        var html = '';
+        if (data.error) {
+          html = data.error;
+        }
+        else {
+          var products = data.productos;
+          if (products.length) {
+            $.each(products,function (index,product) {
+              html += '<li style="opacity: 1;">' + renderProduct(product) + '</li>';
+            });
+            html = '<ul class="shop_items js-shop-items">'+html+'</ul>';
+          }
+          else {
+            html = 'no hay productos aun';
+          }
+        }
+        container.html(html);
+      });
+    })($container);
+  };
+
   var renderProductDetails = function (product) {
     var html = '';
     if (product) {
-      var source = $("#shopProductDetails").html();
+      var source = $('#shopProductDetails').html();
       var template = Handlebars.compile(source);
       html = template(product);
     }
@@ -199,19 +273,20 @@ todocel.productos = (function () {
           $.each(products,function (index,product) {
             html += '<li style="opacity: 1;">' + renderProduct(product) + '</li>';
           });
+          html = '<ul class="shop_items js-shop-items">'+html+'</ul>';
         }
         else {
           html = 'no hay productos aun';
         }
       }
-      $('.js-shop-items').html(html);
+      $('.js-shop-container').html(html);
     });
   };
 
   var renderProduct = function (product) {
     var html = '';
     if (product) {
-      var source = $("#shopProductItem").html();
+      var source = $('#shopProductItem').html();
       var template = Handlebars.compile(source);
       html = template(product);
     }
@@ -220,7 +295,7 @@ todocel.productos = (function () {
 
   return {
     init: init,
-    listProducts: listProducts
+    listCategories: listCategories
   };
 })();
 
@@ -315,7 +390,7 @@ todocel.cartHandler = (function () {
   var renderCartItem = function (product) {
     var html = '';
     if (product) {
-      var source = $("#cartProductItem").html();
+      var source = $('#cartProductItem').html();
       var template = Handlebars.compile(source);
       html = template(product);
     }
