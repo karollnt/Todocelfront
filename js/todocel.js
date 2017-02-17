@@ -350,7 +350,7 @@ todocel.cartHandler = (function () {
     todocel.config.$document.off('submit','.js-cart-element-form').on('submit','.js-cart-element-form',triggerSubmit);
     todocel.config.$document.on('click','.js-cart-remove-item',removeFormCart);
     todocel.config.$document.off('click','.js-addtocart').on('click','.js-addtocart',addToCart);
-    todocel.config.$document.on('submit','.js-enviarPago',verifyCartStock);
+    todocel.config.$document.off('submit','.js-enviarPago').on('submit','.js-enviarPago',verifyCartStock);
   };
 
   var triggerSubmit = function (ev) {
