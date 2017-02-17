@@ -2,7 +2,7 @@
 var todocel = (function () {
   var config = {
     $document: $(document),
-    /*backend: '//localhost/TodoCel',*/
+    // backend: '//localhost/TodoCel',
     backend: 'https://todocel.herokuapp.com',
     user: window.localStorage.getItem('nickname')
   }
@@ -140,7 +140,7 @@ todocel.products = (function () {
     todocel.config.$document
     .off('click','.js-show-shop-item')
     .on('click','.js-show-shop-item',openProductDetail)
-    .on('click','.js-view-category',listProductsOfCategory);
+    .on('click','.js-view-category',listSubcategoriesOrProducts);
   };
 
   var renderCategory = function (category) {
@@ -155,7 +155,7 @@ todocel.products = (function () {
 
   var listCategories = function () {
     var ajx = $.ajax({
-      url: todocel.config.backend+'/categorias/listarCategorias',
+      url: todocel.config.backend+'/categorias/listarCategoriasPrincipales',
       type: 'post',
       dataType: 'json',
       data: ''
@@ -168,6 +168,46 @@ todocel.products = (function () {
       }
       else {
         var categorias = data.categorias;
+        var source = $('#shopCategoriesList').html();
+        var template = Handlebars.compile(source);
+
+        for (var i = 0; i < categorias.length; i++) {
+          html += renderCategory(categorias[i]);
+        }
+        containerHtml = template({categories: html});
+      }
+      $container.html(containerHtml);
+    });
+  };
+
+  var listSubcategoriesOrProducts = function (ev) {
+    ev.preventDefault();
+    var element = ev.currentTarget;
+    var subCategoryId = element.dataset.sub;
+    var categoryId = element.dataset.id;
+    if (subCategoryId) {
+      listSubcategories(categoryId);
+    }
+    else {
+      listProductsOfCategory(categoryId);
+    }
+  };
+
+  var listSubcategories = function (categoryId) {
+    var ajx = $.ajax({
+      url: todocel.config.backend+'/categorias/listarSubcategorias',
+      type: 'post',
+      dataType: 'json',
+      data: {id: categoryId}
+    });
+    ajx.done(function (data) {
+      var html = '', containerHtml = '';
+      var $container = $('.js-shop-container');
+      if (data.error) {
+        containerHtml = data.error;
+      }
+      else {
+        var categorias = data.subcategorias;
         var source = $('#shopCategoriesList').html();
         var template = Handlebars.compile(source);
 
@@ -209,10 +249,7 @@ todocel.products = (function () {
     });
   };
 
-  var listProductsOfCategory = function (ev) {
-    ev.preventDefault();
-    var element = ev.currentTarget;
-    var categoryId = element.dataset.id;
+  var listProductsOfCategory = function (categoryId) {
     var $container = $('.js-shop-container');
 
     $container.html('<img src="images/loader.gif">');
@@ -529,7 +566,11 @@ todocel.payments = (function () {
   var processPayment = function (form) {
     Mercadopago.createToken(document.querySelector('.js-enviarPago'), function (st,resp) {
       if(st!=200 && st!=201) {
-        alert('No es posible llevar a cabo el proceso');
+        var reason = '';
+        for (var i = 0; i < resp.cause.length; i++) {
+          reason += (resp.cause[i].description)+'.';
+        }
+        alert(reason);
       }
       else {
         todocel.cartHandler.createOrder(form);
