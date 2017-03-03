@@ -465,12 +465,13 @@ todocel.cartHandler = (function () {
       html += renderCartItem(cartData.items[i]);
       total += cartData.items[i].price * cartData.items[i].quantity;
     }
+    var vat = Math.round(total*0.0495);
     $('.js-cart-quantity').html('('+dataSize+' productos)');
     $('.js-cart-items').html(html);
-    /*$('.js-cart-subtotal').html('$'+(Math.round(total*0.81)));
-    $('.js-cart-vat').html('$'+(Math.round(total*0.19)));*/
+    /*$('.js-cart-subtotal').html('$'+(Math.round(total*0.81)));*/
+    $('.js-cart-vat').html('$'+vat);
     $('.js-cart-subtotal').html('$'+total);
-    $('.js-cart-total').html('$'+total);
+    $('.js-cart-total').html('$'+(total+vat));
     var $linkCheckout = $('.js-go-checkout');
     if (dataSize > 0) {
       $linkCheckout.show();
@@ -579,10 +580,11 @@ todocel.payments = (function () {
 
   var renderPrices = function () {
     var total = todocel.cartHandler.getTotal();
-    /*$('.js-checkout-subtotal').html('$'+(Math.round(total*0.81)));
-    $('.js-checkout-vat').html('$'+(Math.round(total*0.19)));*/
+    var vat = Math.round(total*0.0495);
+    /*$('.js-checkout-subtotal').html('$'+(Math.round(total*0.81)));*/
+    $('.js-checkout-vat').html('$'+(Math.round(total*0.0495)));
     $('.js-checkout-subtotal').html('$'+total);
-    $('.js-checkout-total').html('$'+total);
+    $('.js-checkout-total').html('$'+(total+vat));
     $('.js-checkout-valor').val(total);
   };
 
