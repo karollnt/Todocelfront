@@ -374,6 +374,7 @@ todocel.cartHandler = (function () {
     todocel.config.$document.on('click','.js-cart-remove-item',removeFormCart);
     todocel.config.$document.off('click','.js-addtocart').on('click','.js-addtocart',addToCart);
     todocel.config.$document.off('submit','.js-enviarPago').on('submit','.js-enviarPago',verifyCartStock);
+    todocel.config.$document.off('submit','.js-pago-efectivo').on('submit','.js-pago-efectivo',verifyCartStock);
   };
 
   var triggerSubmit = function (ev) {
@@ -471,7 +472,8 @@ todocel.cartHandler = (function () {
     /*$('.js-cart-subtotal').html('$'+(Math.round(total*0.81)));*/
     $('.js-cart-vat').html('$'+vat);
     $('.js-cart-subtotal').html('$'+total);
-    $('.js-cart-total').html('$'+(total+vat));
+    // $('.js-cart-total').html('$'+(total+vat));
+    $('.js-cart-total').html('$'+(total));
     var $linkCheckout = $('.js-go-checkout');
     if (dataSize > 0) {
       $linkCheckout.show();
@@ -494,18 +496,27 @@ todocel.cartHandler = (function () {
       dataType: 'json',
       data: {cartData: JSON.stringify(cartData)}
     });
-    ajx.done(function (data) {
-      if (data.responseCode == 1) {
-        todocel.payments.processPayment(jsonForm);
-      }
-      else {
-        alert(data.responseMessage);
-        $btn.prop('disabled',false).html('<i class="fa fa-money" aria-hidden="true"></i> Aceptar');
-      }
-    })
-    .fail(function (err) {
-      console.log(err);
-    });
+    (function (form) {
+      ajx.done(function (data) {
+        var isCash = form.efectivo ? (form.efectivo*1 == 1) : false;
+        if (data.responseCode == 1) {
+          if (isCash) {
+            form.nickname = todocel.config.user;
+            todocel.cartHandler.createOrder(form);
+          }
+          else {
+            todocel.payments.processPayment(form);
+          }
+        }
+        else {
+          alert(data.responseMessage);
+          $btn.prop('disabled',false).html('<i class="fa fa-money" aria-hidden="true"></i> Aceptar');
+        }
+      })
+      .fail(function (err) {
+        console.log(err);
+      });
+    })(jsonForm);
   };
 
   var updateStock = function () {
@@ -584,8 +595,9 @@ todocel.payments = (function () {
     /*$('.js-checkout-subtotal').html('$'+(Math.round(total*0.81)));*/
     $('.js-checkout-vat').html('$'+(Math.round(total*0.0495)));
     $('.js-checkout-subtotal').html('$'+total);
+    $('.js-checkout-cash-value').val(total);
     $('.js-checkout-total').html('$'+(total+vat));
-    $('.js-checkout-valor').val(total);
+    $('.js-checkout-valor').val(total+vat);
   };
 
   var processPayment = function (form) {
