@@ -1,5 +1,5 @@
 /* custom styles */
-.button {
+.button--full {
   width: 100%;
 }
 
@@ -53,4 +53,7 @@ input.qntyshop {
 }
 .carttotal_extra-info{
   font-size: 10px;
+}
+.push--bottom {
+  margin-bottom: 10px;
 }

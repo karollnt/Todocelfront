@@ -644,28 +644,57 @@ todocel.payments = (function () {
     ev.preventDefault();
     var element = ev.currentTarget;
     var orderId = element.dataset.id;
+    var orderType = element.dataset.type;
     var $orderContainer = $('.js-order-container');
     $orderContainer.html('');
     var ajx = $.ajax({
       url: todocel.config.backend+'/ventas/detalleOrden',
       type: 'post',
       dataType: 'json',
-      data: {id: orderId}
+      data: {id: orderId, tipo: orderType}
     });
     ajx.done(function (resp) {
       var html = '';
-      var source, template;
+      var source, template, order;
       if (resp.status == 200) {
         html = '';
+        order = resp.msg;
+        order.permiteCargaComprobante = false;
+        if ((order.estado).toLowerCase() == 'pendiente') {
+          order.permiteCargaComprobante = true;
+        }
         source = $('#orderDetail').html();
         template = Handlebars.compile(source);
-        html = template(resp.msg);
+        html = template(order);
         $orderContainer.html(html);
+        todocel.config.$document.on('submit','.js-send-document',uploadVoucherFile);
       }
       else {
         alert(detail);
       }
     });
+
+    var uploadVoucherFile = function (ev) {
+      ev.preventDefault();
+      var form = ev.target;
+      var formData = new FormData(form);
+      var ajx = $.ajax({
+        type: 'post',
+        url: todocel.config.backend+'/ventas/ingresarSoporte',
+        dataType: 'json',
+        data: formData,
+        async : false,
+        cache : false,
+        contentType : false,
+        processData : false
+      });
+      ajx.done(function (resp) {
+        alert(resp.msg);
+      })
+      .fail(function (e) {
+        alert('Error: ' + e.message);
+      });
+    };
   };
 
   return {
