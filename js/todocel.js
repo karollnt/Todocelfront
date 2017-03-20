@@ -111,21 +111,23 @@ todocel.navLinks = (function () {
 
   var loadPage = function (element) {
     var isSessionStarted = todocel.users.verifyLoggedIn();
-    if (isSessionStarted) {
-      var url = element.dataset.link;
-      if (url) {
+    var url = element.dataset.link;
+    if (url) {
+      if (url.indexOf('shop') > -1) {
         mainView.router.loadPage(url+"?"+(Math.floor((Math.random() * 1000) + 1)));
-        if (url.indexOf('shop') > -1) {
-          todocel.products.listCategories();
-        }
-        if (url.indexOf('index') > -1) {
-          setTimeout(function () {
-            todocel.cartHandler.init();
-            todocel.navLinks.init();
-            todocel.users.init();
-          },500);
-        }
-        if (url.indexOf('pasarela') > -1) {
+        todocel.products.listCategories();
+      }
+      else if (url.indexOf('index') > -1) {
+        mainView.router.loadPage(url+"?"+(Math.floor((Math.random() * 1000) + 1)));
+        setTimeout(function () {
+          todocel.cartHandler.init();
+          todocel.navLinks.init();
+          todocel.users.init();
+        },500);
+      }
+      else if (url.indexOf('pasarela') > -1) {
+        if (isSessionStarted) {
+          mainView.router.loadPage(url+"?"+(Math.floor((Math.random() * 1000) + 1)));
           setTimeout(function(){
             mercpagoui.initEvents();
             todocel.utils.fillMonthSelect('.js-expirationMonth');
@@ -133,15 +135,21 @@ todocel.navLinks = (function () {
             todocel.payments.init();
           },1000);
         }
-        if (url.indexOf('history') > -1) {
+        else {
+          myApp.popup('.popup-login');
+        }
+      }
+      else if (url.indexOf('history') > -1) {
+        if (isSessionStarted) {
+          mainView.router.loadPage(url+"?"+(Math.floor((Math.random() * 1000) + 1)));
           setTimeout(function(){
             todocel.payments.listOrders();
           },1000);
         }
+        else {
+          myApp.popup('.popup-login');
+        }
       }
-    }
-    else {
-      myApp.popup('.popup-login');
     }
   };
 
@@ -769,7 +777,6 @@ todocel.users = (function () {
       $loginElem.find('span').html('Logout');
     }
     else {
-      myApp.popup('.popup-login');
       $loginElem.find('img').prop('src','images/icons/yellow/user.png');
       $loginElem.find('span').html('Login');
     }
